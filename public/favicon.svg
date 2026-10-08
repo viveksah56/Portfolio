@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="B logo">
+  <defs>
+    <linearGradient id="g" x1="91" y1="0" x2="168" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6AB0FD"/>
+      <stop offset="1" stop-color="#1A8AFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" fill="#050B16"/>
+  <rect x="19" y="19" width="218" height="218" rx="46" fill="none" stroke="#177BEE" stroke-width="3"/>
+  <rect x="25.5" y="25.5" width="205" height="205" rx="40" fill="none" stroke="#0E2B51" stroke-width="1"/>
+  <path fill="url(#g)" fill-rule="evenodd" d="
+    M91 79 H139 C155 79 164 87 164 101 C164 111 160 118 152 122.5
+    C163 127 168 134 168 144 C168 163 156 172.75 138 172.75 H91 Z
+    M114.75 95.4 V115.6 H131 C137 115.6 139.75 112.5 139.75 105.5 C139.75 98.5 137 95.4 131 95.4 Z
+    M114.75 131.25 V156.25 H133 C140 156.25 144 152 144 143.75 C144 135.5 140 131.25 133 131.25 Z"/>
+</svg>
