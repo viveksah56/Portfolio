@@ -4,6 +4,7 @@ import CurrentYear from '@/components/current-year';
 import ScrollReveal from '@/components/scroll-reveal';
 import { contactData, siteConfig } from '@/lib/constants';
 import { cn } from '@/lib/utils';
+import {Suspense} from "react";
 
 const labelClass = 'text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground sm:text-xs';
 
@@ -114,9 +115,11 @@ export default function ContactSection() {
 
             <footer className="mx-auto mt-16 w-full px-5 pb-8 sm:mt-24 sm:px-8 sm:pb-10 lg:px-[6%]">
                 <div className="flex flex-col gap-2 border-t border-border pt-6 text-[13px] tracking-[-0.01em] text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:text-sm">
-                    <p>
-                        © <CurrentYear fallback={copyrightYear} /> {siteConfig.name}. All rights reserved.
-                    </p>
+                    <Suspense fallback={null}>
+                        <p>
+                            © <CurrentYear fallback={copyrightYear} /> {siteConfig.name}. All rights reserved.
+                        </p>
+                    </Suspense>
                     <p>
                         {siteConfig.role} · {siteConfig.location}
                     </p>
