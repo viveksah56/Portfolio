@@ -1,0 +1,23 @@
+# Bibek Sah
+
+> Full Stack Developer in Kathmandu, Nepal with 3 years of professional experience building scalable, production-ready web applications with React.js, Next.js, TypeScript, Java, Spring Boot, Node.js, and Express.js, backed by MongoDB, MySQL, and PostgreSQL.
+
+## About
+- Delivered 13+ production web applications across healthcare, education, e-commerce, and corporate sectors at Dwork IT Solutions (Jan 2023 to Jan 2026)
+- Built admin dashboards with role-based access control for 6+ client platforms
+- Improved load times and Core Web Vitals with SSR, SSG, ISR, code splitting, and lazy loading
+- Owns features end to end, from database schema and REST API design to an SEO-optimized, accessible UI
+- Studying for a Master of Computer Science and Information Technology (MCSIT) at Pokhara University; open to full-time Full Stack Developer roles
+
+## Selected projects
+- [ExamNepal](https://www.examsnepal.com): online examination and learning platform with analytics and an admin dashboard
+- [Medishop](https://nepal-medishop-frontend.vercel.app): healthcare e-commerce platform with inventory and order management
+- [BabyCare Marketplace](https://www.thebabycareapp.com): multi-vendor marketplace with role-based dashboards
+- [LooksCart](https://www.lookscart.com): eyewear e-commerce with secure checkout
+- [Dwork-it](https://www.dworkit.com): server-rendered corporate site with structured SEO
+
+## Links
+- [Portfolio](https://bibeksah.com)
+- [GitHub](https://github.com/viveksah56)
+- [LinkedIn](https://www.linkedin.com/in/bibek-s-1067aa1a4)
+- [Sitemap](https://bibeksah.com/sitemap.xml)

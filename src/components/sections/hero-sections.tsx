@@ -10,7 +10,7 @@ const emailHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent('Proj
 
 const primaryButtonClass = cn(
     buttonVariants({ size: 'lg' }),
-    'type-button h-12 w-full gap-3 rounded-xl bg-primary px-6 text-primary-foreground shadow-lg shadow-foreground/10 transition-transform duration-300 hover:-translate-y-0.5 hover:bg-primary/90 active:translate-y-0 sm:h-14 sm:w-auto sm:px-8',
+    'type-button h-10 w-full gap-2 rounded-full bg-primary px-5 text-primary-foreground transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--foreground)_45%,transparent)] active:translate-y-0 sm:h-11 sm:w-auto sm:px-6',
 );
 
 const textLinkClass =
@@ -20,6 +20,7 @@ export default function HeroSections() {
     return (
         <section
             id="home"
+            aria-label="Introduction"
             className="relative isolate flex min-h-svh flex-col overflow-hidden pb-8 pt-28 sm:pb-10 sm:pt-36 lg:pt-44"
         >
             <HeroBackdrop />
@@ -32,26 +33,24 @@ export default function HeroSections() {
                 </ScrollReveal>
 
                 <h1 className="type-display mt-8 text-foreground sm:mt-12">
-                    {siteConfig.headline.map((line, index) => (
-                        <ScrollReveal key={line} y={40} delay={120 + index * 140} duration={0.9}>
-                            <span className="block">{line}</span>
-                        </ScrollReveal>
-                    ))}
-                    <ScrollReveal y={40} delay={120 + siteConfig.headline.length * 140} duration={0.9}>
-                        <span className="relative inline-block text-brand">
-                            {siteConfig.highlight}
-                            <span aria-hidden className="hero-underline" />
+                    {siteConfig.headline.map((line) => (
+                        <span key={line} className="block">
+                            {line}
                         </span>
-                    </ScrollReveal>
+                    ))}
+                    <span className="relative inline-block text-brand">
+                        {siteConfig.highlight}
+                        <span aria-hidden className="hero-underline" />
+                    </span>
                 </h1>
 
-                <ScrollReveal className="mt-8 sm:mt-10" y={24} delay={560}>
+                <ScrollReveal className="mt-8 sm:mt-10" y={24} delay={200}>
                     <p className="type-subhead max-w-[44ch] text-muted-foreground lg:max-w-[52ch]">
                         {siteConfig.description}
                     </p>
                 </ScrollReveal>
 
-                <ScrollReveal className="mt-8 sm:mt-10" y={24} delay={700}>
+                <ScrollReveal className="mt-8 sm:mt-10" y={24} delay={320}>
                     <div className="flex flex-col items-stretch gap-x-8 gap-y-6 sm:flex-row sm:flex-wrap sm:items-center">
                         <Link href="#work" className={primaryButtonClass}>
                             View work
@@ -65,7 +64,7 @@ export default function HeroSections() {
                     </div>
                 </ScrollReveal>
 
-                <ScrollReveal className="mt-auto pt-14 sm:pt-16" y={12} delay={900}>
+                <ScrollReveal className="mt-auto pt-14 sm:pt-16" y={12} delay={440}>
                     <Link
                         href="#story"
                         className="type-caption group flex w-fit items-center gap-4 font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground"

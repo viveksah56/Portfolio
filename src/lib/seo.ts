@@ -1,6 +1,57 @@
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bibeksah.com').replace(/\/$/, '');
-export const siteName = 'Bibek Sah';
-export const siteTitle = 'Bibek Sah | Software Developer';
-export const siteDescription =
-    'Portfolio of Bibek Sah, a software developer building fast, accessible and scalable web applications with Next.js, React and TypeScript.';
-export const jobTitle = 'Software Developer';
+export const seoData = {
+    siteUrl: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bibeksah.com').replace(/\/$/, ''),
+    title: 'Bibek Sah | Full Stack Developer in Kathmandu, Nepal',
+    description:
+        'Full Stack Developer in Kathmandu, Nepal with 3 years of experience building fast web apps with React, Next.js, TypeScript, Java Spring Boot, and Node.js.',
+    keywords: [
+        'Bibek Sah',
+        'Full Stack Developer',
+        'Full Stack Developer Nepal',
+        'Full Stack Developer Kathmandu',
+        'Next.js Developer',
+        'React Developer',
+        'TypeScript Developer',
+        'Java Spring Boot Developer',
+        'Node.js Developer',
+        'Express.js Developer',
+        'MERN Stack Developer',
+        'REST API Development',
+        'MongoDB PostgreSQL MySQL',
+        'Tailwind CSS Shadcn/UI',
+        'Core Web Vitals',
+        'SEO Optimization',
+        'Admin Dashboard Development',
+        'Web Developer Nepal',
+        'Portfolio',
+    ],
+    locale: 'en_US',
+    lastUpdated: '2026-10-09',
+    socialCard: {
+        url: '/social-card.png',
+        width: 1200,
+        height: 630,
+        alt: 'Bibek Sah, Full Stack Developer',
+    },
+    knowsAbout: [
+        'React',
+        'Next.js',
+        'TypeScript',
+        'JavaScript',
+        'Java',
+        'Spring Boot',
+        'Node.js',
+        'Express.js',
+        'MongoDB',
+        'PostgreSQL',
+        'MySQL',
+        'Redis',
+        'REST API Development',
+        'Tailwind CSS',
+        'Server-side rendering',
+        'Core Web Vitals',
+        'SEO Optimization',
+        'Web Accessibility',
+        'Docker',
+        'CI/CD',
+    ],
+} as const;
