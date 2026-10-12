@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { caseStudies } from '@/lib/projects';
 import { seoData } from '@/lib/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -10,5 +11,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1,
             images: [`${seoData.siteUrl}${seoData.socialCard.url}`],
         },
+        ...caseStudies.map((study) => ({
+            url: `${seoData.siteUrl}/projects/${study.slug}`,
+            lastModified: seoData.lastUpdated,
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+        })),
     ];
 }

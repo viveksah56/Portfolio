@@ -16,6 +16,13 @@
 - [LooksCart](https://www.lookscart.com): eyewear e-commerce with secure checkout
 - [Dwork-it](https://www.dworkit.com): server-rendered corporate site with structured SEO
 
+## Case studies
+- [ExamNepal](https://www.bibeksah1.com.np/projects/examnepal)
+- [Medishop](https://www.bibeksah1.com.np/projects/medishop)
+- [BabyCare Marketplace](https://www.bibeksah1.com.np/projects/babycare-marketplace)
+- [LooksCart](https://www.bibeksah1.com.np/projects/lookscart)
+- [Dwork-it](https://www.bibeksah1.com.np/projects/dwork-it)
+
 ## Links
 - [Portfolio](https://www.bibeksah1.com.np)
 - [GitHub](https://github.com/viveksah56)

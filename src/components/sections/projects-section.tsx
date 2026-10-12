@@ -1,7 +1,9 @@
+import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/scroll-reveal';
 import { Badge } from '@/components/ui/badge';
 import { selectedProjectsData } from '@/lib/constants';
+import { slugify } from '@/lib/projects';
 import { cn } from '@/lib/utils';
 
 type SelectedProject = (typeof selectedProjectsData.projects)[number];
@@ -106,12 +108,20 @@ function ProjectDetails({ project }: { project: SelectedProject }) {
                 </ul>
             </div>
 
+            <Link
+                href={`/projects/${slugify(project.name)}`}
+                aria-label={`Read the ${project.name} case study`}
+                className="mt-8 inline-flex w-fit items-center gap-2 text-[15px] font-semibold tracking-[-0.016em] text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:text-brand hover:decoration-brand focus-visible:text-brand sm:mt-10"
+            >
+                Read case study
+            </Link>
+
             <a
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Visit ${project.name} at ${project.urlLabel} (opens in a new tab)`}
-                className="group mt-8 inline-flex w-fit items-center gap-3 border-b-2 border-foreground/80 pb-2.5 text-[17px] font-semibold tracking-[-0.022em] text-foreground transition-colors hover:border-brand hover:text-brand focus-visible:border-brand focus-visible:text-brand sm:mt-10"
+                className="group mt-6 inline-flex w-fit items-center gap-3 border-b-2 border-foreground/80 pb-2.5 text-[17px] font-semibold tracking-[-0.022em] text-foreground transition-colors hover:border-brand hover:text-brand focus-visible:border-brand focus-visible:text-brand"
             >
                 Visit project
                 <ArrowUpRight
