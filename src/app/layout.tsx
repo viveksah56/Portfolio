@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import GoogleAnalytics from '@/components/google-analytics';
 import JsonLd from '@/components/json-ld';
 import ScrollProgress from '@/components/scroll-progress';
 import { ThemeProvider } from '@/components/theme/theme-provider';
@@ -13,6 +12,7 @@ import { DEFAULT_THEME, THEME_COLORS, THEME_STORAGE_KEY } from '@/lib/themes';
 import './globals.css';
 
 const { siteUrl, title, description, locale, socialCard } = seoData;
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export const metadata: Metadata = {
     metadataBase: new URL(siteUrl),
@@ -76,6 +76,16 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <head>
             <script dangerouslySetInnerHTML={{ __html: themeScript }} />
             <JsonLd data={structuredData} />
+            {GA_ID && /^G-[A-Z0-9]+$/.test(GA_ID) && (
+                <>
+                    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`,
+                        }}
+                    />
+                </>
+            )}
         </head>
         <body className="min-h-svh">
         <a
@@ -89,7 +99,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
             {children}
         </ThemeProvider>
         <Analytics />
-        <GoogleAnalytics />
         <SpeedInsights />
         </body>
         </html>
