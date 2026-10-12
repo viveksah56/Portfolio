@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import GoogleAnalytics from '@/components/google-analytics';
 import JsonLd from '@/components/json-ld';
 import ScrollProgress from '@/components/scroll-progress';
 import { ThemeProvider } from '@/components/theme/theme-provider';
@@ -88,6 +89,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
             {children}
         </ThemeProvider>
         <Analytics />
+        <GoogleAnalytics />
         <SpeedInsights />
         </body>
         </html>
