@@ -1,5 +1,5 @@
 export const seoData = {
-    siteUrl: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bibeksah.com').replace(/\/$/, ''),
+    siteUrl: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bibeksah1.com.np').replace(/\/$/, ''),
     title: 'Bibek Sah | Full Stack Developer in Kathmandu, Nepal',
     description:
         'Full Stack Developer in Kathmandu, Nepal with 3 years of experience building fast web apps with React, Next.js, TypeScript, Java Spring Boot, and Node.js.',

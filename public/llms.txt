@@ -17,7 +17,7 @@
 - [Dwork-it](https://www.dworkit.com): server-rendered corporate site with structured SEO
 
 ## Links
-- [Portfolio](https://bibeksah.com)
+- [Portfolio](https://www.bibeksah1.com.np)
 - [GitHub](https://github.com/viveksah56)
 - [LinkedIn](https://www.linkedin.com/in/bibek-s-1067aa1a4)
-- [Sitemap](https://bibeksah.com/sitemap.xml)
+- [Sitemap](https://www.bibeksah1.com.np/sitemap.xml)

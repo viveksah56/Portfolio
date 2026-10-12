@@ -11,13 +11,12 @@ import { structuredData } from '@/lib/structured-data';
 import { DEFAULT_THEME, THEME_COLORS, THEME_STORAGE_KEY } from '@/lib/themes';
 import './globals.css';
 
-const { siteUrl, title, description, keywords, locale, socialCard } = seoData;
+const { siteUrl, title, description, locale, socialCard } = seoData;
 
 export const metadata: Metadata = {
     metadataBase: new URL(siteUrl),
     title: { default: title, template: `%s | ${siteConfig.name}` },
     description,
-    keywords: [...keywords],
     applicationName: siteConfig.name,
     authors: [{ name: siteConfig.name, url: siteUrl }],
     creator: siteConfig.name,
@@ -74,7 +73,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     return (
         <html lang="en" data-theme={DEFAULT_THEME} suppressHydrationWarning>
         <head>
-            <title>{title}</title>
             <script dangerouslySetInnerHTML={{ __html: themeScript }} />
             <JsonLd data={structuredData} />
         </head>

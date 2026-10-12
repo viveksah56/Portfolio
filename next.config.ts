@@ -14,6 +14,15 @@ const nextConfig: NextConfig = {
     images: {
         formats: ['image/avif', 'image/webp'],
     },
+    async redirects() {
+        const canonicalOrigin = 'https://www.bibeksah1.com.np';
+        return ['bibeksah.com', 'www.bibeksah.com', 'bibeksah1.com.np'].map((host) => ({
+            source: '/:path*',
+            has: [{type: 'host' as const, value: host}],
+            destination: `${canonicalOrigin}/:path*`,
+            permanent: true,
+        }));
+    },
     async headers() {
         return [
             {

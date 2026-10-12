@@ -33,6 +33,9 @@ export default function HeroSections() {
                 </ScrollReveal>
 
                 <h1 className="type-display mt-8 text-foreground sm:mt-12">
+                    <span className="sr-only">
+                        {siteConfig.name}, {siteConfig.role} in {siteConfig.location}.{' '}
+                    </span>
                     {siteConfig.headline.map((line) => (
                         <span key={line} className="block">
                             {line}

@@ -27,7 +27,7 @@ export default function WorkSection() {
                         id="work-heading"
                         className="type-caption flex items-center gap-4 font-semibold uppercase tracking-[0.2em] text-background/60 sm:text-sm"
                     >
-                        <span className="text-brand">02</span>
+                        <span className="text-brand">04</span>
                         <span>By the numbers</span>
                     </h2>
                 </ScrollReveal>
