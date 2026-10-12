@@ -10,10 +10,10 @@ export const siteConfig = {
 } as const;
 
 export const navLinks = [
-    { label: 'Story', href: '#story' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Work', href: '#work' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Story', href: '/#story' },
+    { label: 'Experience', href: '/#experience' },
+    { label: 'Work', href: '/#work' },
+    { label: 'Contact', href: '/#contact' },
 ] as const;
 
 export const stats = [
