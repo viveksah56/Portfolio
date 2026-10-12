@@ -76,6 +76,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     return (
         <html lang="en" data-theme={DEFAULT_THEME} suppressHydrationWarning>
         <head>
+            <title>{siteConfig.name}</title>
             <script dangerouslySetInnerHTML={{ __html: themeScript }} />
             <JsonLd data={structuredData} />
             {GA_ID && /^G-[A-Z0-9]+$/.test(GA_ID) && (
