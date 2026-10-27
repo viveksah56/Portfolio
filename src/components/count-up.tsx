@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useInView, useReducedMotion } from 'motion/react';
-import { useRef } from 'react';
+import { useInView, useReducedMotion } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
 
 type CountUpProps = {
     value: number;
@@ -12,58 +12,69 @@ type CountUpProps = {
     className?: string;
 };
 
-const DIGITS = Array.from({ length: 20 }, (_, index) => index % 10);
-const EASE = [0.22, 1, 0.36, 1] as const;
-
-export default function CountUp({ value, suffix = '', pad = 0, delay = 0, duration = 1.6, className }: CountUpProps) {
+export default function CountUp({
+    value,
+    suffix = '',
+    pad = 0,
+    delay = 0,
+    duration = 1.4,
+    className,
+}: CountUpProps) {
     const ref = useRef<HTMLSpanElement>(null);
-    const inView = useInView(ref, { amount: 0.6 });
+    const inView = useInView(ref, { amount: 0.3, once: true });
     const reduce = useReducedMotion();
-    const active = inView || Boolean(reduce);
-    const text = String(value).padStart(pad, '0');
+    // Default to target value for SSR / text extraction
+    const [display, setDisplay] = useState(value);
+
+    const formattedTarget = pad ? String(value).padStart(pad, '0') : String(value);
+
+    useEffect(() => {
+        if (reduce || !inView) {
+            return;
+        }
+
+        let start: number | null = null;
+        let animationFrame: number;
+        const delayTimeout = setTimeout(() => {
+            // Reset to 0 asynchronously inside the frame before animating up
+            setDisplay(0);
+
+            const step = (timestamp: number) => {
+                if (!start) start = timestamp;
+                const elapsed = (timestamp - start) / 1000;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease-out cubic: 1 - Math.pow(1 - progress, 3)
+                const eased = 1 - Math.pow(1 - progress, 3);
+                setDisplay(Math.round(eased * value));
+
+                if (progress < 1) {
+                    animationFrame = requestAnimationFrame(step);
+                } else {
+                    setDisplay(value);
+                }
+            };
+            animationFrame = requestAnimationFrame(step);
+        }, delay);
+
+        return () => {
+            clearTimeout(delayTimeout);
+            if (animationFrame) cancelAnimationFrame(animationFrame);
+        };
+    }, [inView, value, delay, duration, reduce]);
+
+    const formattedDisplay = pad ? String(display).padStart(pad, '0') : String(display);
 
     return (
-        <span ref={ref} className={className}>
-            <span className="sr-only">{`${text}${suffix}`}</span>
-
-            <span aria-hidden className="inline-flex items-start">
-                {text.split('').map((char, index) => (
-                    <span key={`${index}-${char}`} className="relative inline-block h-[1.1em] overflow-hidden">
-                        <span className="invisible block h-[1.1em] leading-[1.1em]">{char}</span>
-                        <motion.span
-                            initial={false}
-                            animate={{ y: active ? `${-(Number(char) + 10) * 5}%` : '0%' }}
-                            transition={
-                                active && !reduce
-                                    ? { duration: duration + index * 0.18, delay: delay / 1000, ease: EASE }
-                                    : { duration: 0 }
-                            }
-                            className="absolute left-0 top-0 flex flex-col"
-                        >
-                            {DIGITS.map((digit, digitIndex) => (
-                                <span key={digitIndex} className="block h-[1.1em] leading-[1.1em]">
-                                    {digit}
-                                </span>
-                            ))}
-                        </motion.span>
-                    </span>
-                ))}
-
-                {suffix ? (
-                    <motion.span
-                        initial={false}
-                        animate={{ opacity: active ? 1 : 0, y: active ? 0 : 12 }}
-                        transition={
-                            active && !reduce
-                                ? { duration: 0.7, delay: delay / 1000 + duration * 0.65, ease: EASE }
-                                : { duration: 0 }
-                        }
-                        className="block h-[1.1em] leading-[1.1em]"
-                    >
-                        {suffix}
-                    </motion.span>
-                ) : null}
+        <span
+            ref={ref}
+            className={`tabular-nums ${className ?? ''}`}
+            aria-label={`${formattedTarget}${suffix}`}
+        >
+            <span aria-hidden="true">
+                {formattedDisplay}
+                {suffix}
             </span>
+            <span className="sr-only">{`${formattedTarget}${suffix}`}</span>
         </span>
     );
 }
