@@ -28,7 +28,7 @@ function getServerSnapshot() {
 }
 
 const navLinkClass =
-    'nav-link text-xs font-normal tracking-[-0.01em] text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground xl:text-[13px]';
+    'nav-link text-[13px] font-normal tracking-[-0.01em] text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground xl:text-sm';
 
 const mobileLinkClass =
     'flex items-center rounded-2xl px-4 py-3 text-[28px] font-semibold leading-[1.15] tracking-[-0.02em] text-foreground transition-colors hover:text-brand focus-visible:text-brand';
@@ -75,7 +75,7 @@ export default function Header() {
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="size-10 rounded-xl text-foreground hover:bg-foreground/10 lg:hidden"
+                        className="size-10.5 rounded-xl text-foreground hover:bg-foreground/10 lg:hidden"
                         aria-label="Open menu"
                         aria-expanded={open}
                         aria-controls={MOBILE_MENU_ID}

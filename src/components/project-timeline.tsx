@@ -37,10 +37,17 @@ export default function ProjectTimeline({ projects }: ProjectTimelineProps) {
     const [active, setActive] = useState(0);
     const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
     const reduce = useReducedMotion();
-    const project = projects[active];
+
+    if (!projects || projects.length === 0) {
+        return null;
+    }
+
+    const safeActive = Math.min(active, projects.length - 1);
+    const project = projects[safeActive];
     const scrollable = projects.length > SCROLL_AFTER;
 
     const select = (index: number) => {
+        if (!projects || projects.length === 0) return;
         const next = (index + projects.length) % projects.length;
         setActive(next);
         tabRefs.current[next]?.focus();
@@ -75,7 +82,6 @@ export default function ProjectTimeline({ projects }: ProjectTimelineProps) {
                         <div
                             role="tablist"
                             aria-label="Projects"
-                            aria-orientation="vertical"
                             onKeyDown={onKeyDown}
                             className="flex w-max gap-2.5 lg:w-full lg:flex-col lg:gap-3"
                         >
@@ -149,7 +155,7 @@ export default function ProjectTimeline({ projects }: ProjectTimelineProps) {
                                 Project {pad(active + 1)}
                             </Badge>
 
-                            <h4 className="mt-6 text-balance wrap-break-word text-[clamp(2.5rem,7vw,6rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-foreground sm:mt-8">
+                            <h4 className="mt-6 text-balance break-words text-[clamp(2.5rem,7vw,6rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-foreground sm:mt-8">
                                 {project.name}
                             </h4>
 

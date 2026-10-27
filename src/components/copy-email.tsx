@@ -39,7 +39,7 @@ export default function CopyEmail({ email, label, copiedLabel, className }: Copy
             type="button"
             onClick={copy}
             className={cn(
-                'inline-flex h-10 items-center justify-center gap-2 rounded-full bg-secondary px-5 text-[15px] font-medium tracking-[-0.016em] text-foreground outline-none transition-[background-color,box-shadow,transform] duration-300 hover:shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--foreground)_35%,transparent)] focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98] sm:h-11 sm:px-6',
+                'inline-flex h-11 items-center justify-center gap-2 rounded-full bg-secondary px-5 text-[15px] font-medium tracking-[-0.016em] text-foreground outline-none transition-[background-color,box-shadow,transform] duration-300 hover:shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--foreground)_35%,transparent)] focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98] sm:h-11 sm:px-6',
                 className,
             )}
         >

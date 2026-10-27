@@ -25,7 +25,7 @@ export const seoData = {
         'Portfolio',
     ],
     locale: 'en_US',
-    lastUpdated: '2026-10-09',
+    lastUpdated: '2026-10-27',
     socialCard: {
         url: '/social-card.png',
         width: 1200,

@@ -10,7 +10,7 @@ const emailHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent('Proj
 
 const primaryButtonClass = cn(
     buttonVariants({ size: 'lg' }),
-    'type-button h-10 w-full gap-2 rounded-full bg-primary px-5 text-primary-foreground transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--foreground)_45%,transparent)] active:translate-y-0 sm:h-11 sm:w-auto sm:px-6',
+    'type-button h-11 w-full gap-2 rounded-full bg-primary px-5 text-primary-foreground transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--foreground)_45%,transparent)] active:translate-y-0 sm:h-11 sm:w-auto sm:px-6',
 );
 
 const textLinkClass =
