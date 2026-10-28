@@ -4,9 +4,10 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
 import JsonLd from '@/components/json-ld';
+import ScrollReveal from '@/components/scroll-reveal';
 import { Badge } from '@/components/ui/badge';
 import { siteConfig } from '@/lib/constants';
-import { caseStudies, getCaseStudy } from '@/lib/projects';
+import { caseStudies, getCaseStudy } from '@/lib/case-studies';
 import { seoData } from '@/lib/seo';
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -50,6 +51,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 const labelClass = 'text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground sm:text-xs';
 
+const sectionSpacing = 'mt-14 sm:mt-20 lg:mt-24';
+
 export default async function CaseStudyPage({ params }: PageProps) {
     const { slug } = await params;
     const study = getCaseStudy(slug);
@@ -57,6 +60,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
     const pageUrl = `${siteUrl}/projects/${study.slug}`;
     const others = caseStudies.filter((item) => item.slug !== study.slug);
+    const publishDate = seoData.lastUpdated;
 
     const jsonLd = {
         '@context': 'https://schema.org',
@@ -65,6 +69,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 '@type': 'CreativeWork',
                 '@id': `${pageUrl}#project`,
                 name: study.name,
+                headline: `${study.name}: ${study.category} case study`,
                 description: study.description,
                 url: pageUrl,
                 sameAs: study.url,
@@ -73,6 +78,20 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 creator: { '@id': `${siteUrl}/#person` },
                 inLanguage: 'en',
                 isPartOf: { '@id': `${siteUrl}/#website` },
+            },
+            {
+                '@type': 'Article',
+                '@id': `${pageUrl}#article`,
+                headline: `${study.name}: ${study.category} case study`,
+                description: study.description,
+                url: pageUrl,
+                datePublished: publishDate,
+                dateModified: publishDate,
+                inLanguage: 'en',
+                author: { '@id': `${siteUrl}/#person` },
+                publisher: { '@id': `${siteUrl}/#person` },
+                image: `${siteUrl}${socialCard.url}`,
+                mainEntityOfPage: pageUrl,
             },
             {
                 '@type': 'BreadcrumbList',
@@ -141,6 +160,17 @@ export default async function CaseStudyPage({ params }: PageProps) {
                         </div>
                     </dl>
 
+                    <ul aria-label="Key facts" className="mt-8 grid gap-4 sm:grid-cols-3">
+                        {study.highlights.map((highlight) => (
+                            <li key={highlight.label} className="rounded-2xl border border-border bg-secondary/40 p-5">
+                                <p className={labelClass}>{highlight.label}</p>
+                                <p className="mt-2 text-[15px] font-medium leading-snug text-foreground">
+                                    {highlight.value}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
+
                     <a
                         href={study.url}
                         target="_blank"
@@ -155,11 +185,64 @@ export default async function CaseStudyPage({ params }: PageProps) {
                         </span>
                     </a>
 
+                    <section aria-labelledby="challenge-heading" className={sectionSpacing}>
+                        <h2 id="challenge-heading" className={labelClass}>
+                            The challenge
+                        </h2>
+                        <p className="mt-5 max-w-[60ch] text-pretty text-[17px] font-normal leading-[1.47059] tracking-[-0.022em] text-muted-foreground sm:text-[19px]">
+                            {study.challenge}
+                        </p>
+                    </section>
+
+                    <section aria-labelledby="process-heading" className={sectionSpacing}>
+                        <h2 id="process-heading" className={labelClass}>
+                            How I approached it
+                        </h2>
+                        <ol className="mt-6 space-y-6">
+                            {study.process.map((step, stepIndex) => (
+                                <li
+                                    key={step.title}
+                                    className="grid gap-2 rounded-2xl border border-border bg-secondary/30 p-5 sm:grid-cols-[3rem_minmax(0,1fr)] sm:gap-4 sm:p-6"
+                                >
+                                    <span aria-hidden className="text-[15px] font-semibold text-brand">
+                                        {String(stepIndex + 1).padStart(2, '0')}
+                                    </span>
+                                    <div>
+                                        <h3 className="text-[17px] font-semibold tracking-[-0.022em] text-foreground sm:text-lg">
+                                            {step.title}
+                                        </h3>
+                                        <p className="mt-2 max-w-[60ch] text-pretty text-[15px] font-normal leading-[1.47059] tracking-[-0.016em] text-muted-foreground sm:text-base">
+                                            {step.detail}
+                                        </p>
+                                    </div>
+                                    </li>
+                            ))}
+                        </ol>
+                    </section>
+
+                    <section aria-labelledby="outcome-heading" className={sectionSpacing}>
+                        <h2 id="outcome-heading" className={labelClass}>
+                            The outcome
+                        </h2>
+                        <p className="mt-5 max-w-[60ch] text-pretty text-[17px] font-normal leading-[1.47059] tracking-[-0.022em] text-muted-foreground sm:text-[19px]">
+                            {study.outcome}
+                        </p>
+                    </section>
+
+                    <section aria-labelledby="reflection-heading" className={sectionSpacing}>
+                        <h2 id="reflection-heading" className={labelClass}>
+                            What I learned
+                        </h2>
+                        <blockquote className="mt-5 max-w-[60ch] border-l-2 border-brand pl-5 text-pretty text-[17px] font-normal leading-[1.47059] tracking-[-0.022em] text-muted-foreground sm:text-[19px]">
+                            {study.reflection}
+                        </blockquote>
+                    </section>
+
                     <section aria-labelledby="more-projects" className="mt-20 border-t border-border pt-10 sm:mt-28">
                         <h2 id="more-projects" className={labelClass}>
                             More projects
                         </h2>
-                        <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
+                        <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
                             {others.map((item) => (
                                 <li key={item.slug}>
                                     <Link
