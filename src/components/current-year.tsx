@@ -2,38 +2,21 @@
 
 import { useSyncExternalStore } from 'react';
 
-const CHANGED = Symbol();
-
 function subscribe(callback: () => void) {
-    const controller = new AbortController();
-    controller.signal.addEventListener('abort', callback, { once: true });
-    // Subscribe to year rollover only if the clock's year differs from render time.
+    // Fire once when the calendar year rolls over, so the UI re-reads the current year.
     const now = new Date();
     const nextYearStart = new Date(now.getFullYear() + 1, 0, 1);
-    const msUntilNextYear = nextYearStart.getTime() - now.getTime();
-    const timeoutId = setTimeout(() => {
-        controller.abort();
-    }, Math.min(Math.max(msUntilNextYear, 0), 2 ** 31 - 1));
-    return () => {
-        clearTimeout(timeoutId);
-        controller.abort();
-    };
+    const msUntilNextYear = Math.max(nextYearStart.getTime() - now.getTime(), 0);
+    const timeoutId = setTimeout(callback, Math.min(msUntilNextYear, 2 ** 31 - 1));
+    return () => clearTimeout(timeoutId);
 }
 
-let cachedSnapshot: { year: number; changedAt: number } | null = null;
-
 function getSnapshot() {
-    const year = new Date().getFullYear();
-    const changedAt = Date.UTC(year, 0, 1);
-    if (!cachedSnapshot || cachedSnapshot.year !== year) {
-        // Cache the immutable snapshot so React can compare by reference.
-        cachedSnapshot = { year, changedAt };
-    }
-    return cachedSnapshot;
+    return new Date().getFullYear();
 }
 
 function getServerSnapshot() {
-    return { year: 1970, changedAt: 0 };
+    return 0;
 }
 
 type CurrentYearProps = {
@@ -41,7 +24,6 @@ type CurrentYearProps = {
 };
 
 export default function CurrentYear({ fallback }: CurrentYearProps) {
-    const snapshot = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-    const year = snapshot.year === 1970 ? fallback : snapshot.year;
+    const year = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
     return <>{year || fallback}</>;
 }
