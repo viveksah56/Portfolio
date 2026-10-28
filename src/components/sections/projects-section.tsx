@@ -3,7 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/scroll-reveal';
 import { Badge } from '@/components/ui/badge';
 import { selectedProjectsData } from '@/lib/constants';
-import { slugify } from '@/lib/projects';
+import { slugify } from '@/lib/case-studies';
 import { cn } from '@/lib/utils';
 
 type SelectedProject = (typeof selectedProjectsData.projects)[number];
@@ -22,6 +22,8 @@ const labelClass =
 
 const badgeClass =
     'h-auto rounded-full border-transparent bg-secondary px-3.5 py-1.5 text-[13px] font-semibold tracking-[-0.01em] text-muted-foreground transition-shadow duration-300 hover:shadow-[0_6px_16px_-6px_color-mix(in_oklab,var(--foreground)_35%,transparent)] sm:text-sm';
+
+const statusBadgeClass = 'h-auto rounded-full border-border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground sm:text-xs';
 
 function ProjectVisual({ project }: { project: SelectedProject }) {
     return (
@@ -183,6 +185,9 @@ export default function ProjectsSection() {
                                         <span>{project.index}</span>
                                         <span>{project.category}</span>
                                     </p>
+                                    <Badge variant="outline" className={statusBadgeClass}>
+                                        Live production
+                                    </Badge>
                                 </div>
 
                                 <div className="mt-6 grid gap-10 lg:mt-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center lg:gap-x-16 xl:gap-x-24">
