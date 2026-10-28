@@ -29,11 +29,7 @@
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
-<<<<<<< HEAD
-    "@testing-library/jest-dom": "^6.9.1",
-=======
     "@testing-library/jest-dom": "^7.0.1",
->>>>>>> 9b796a8 (Changes in vite configuratiosn)
     "@testing-library/react": "^16.3.0",
     "@types/node": "^20",
     "@types/react": "^19",
