@@ -1,11 +1,13 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import type { Metadata } from "next";
-import { CaseStudy, getProject, getAllProjectSlugs, projects } from "@/data/projects";
-import { seoData } from "@/lib/seo";
-
-export type { CaseStudy };
-export { projects };
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import Header from '@/components/Header';
+import JsonLd from '@/components/json-ld';
+import { Badge } from '@/components/ui/badge';
+import { siteConfig } from '@/lib/constants';
+import { caseStudies, getCaseStudy } from '@/lib/projects';
+import { seoData } from '@/lib/seo';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -38,42 +40,42 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function ProjectCaseStudyPage({ params }: PageProps) {
-  const { slug } = await params;
-  const project = getProject(slug);
+const labelClass = 'text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground sm:text-xs';
 
-  if (!project) {
-    notFound();
-  }
+export default async function CaseStudyPage({ params }: PageProps) {
+    const { slug } = await params;
+    const study = getCaseStudy(slug);
+    if (!study) notFound();
 
-  const baseUrl = seoData?.siteUrl || "https://www.bibeksah1.com.np";
-  const pageUrl = `${baseUrl}/projects/${project.slug}`;
+    const pageUrl = `${siteUrl}/projects/${study.slug}`;
+    const others = caseStudies.filter((item) => item.slug !== study.slug);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: project.title,
-    description: project.description,
-    applicationCategory: "EducationalApplication",
-    url: pageUrl,
-    sameAs: project.liveUrl,
-    author: {
-      "@type": "Person",
-      name: "Bibek Sah",
-      url: baseUrl,
-    },
-    publisher: {
-      "@type": "Person",
-      name: "Bibek Sah",
-    },
-  };
-
-  const statusColor =
-    project.status === "Live"
-      ? "bg-emerald-950/60 text-emerald-400 border-emerald-800/60"
-      : project.status === "Demo"
-      ? "bg-amber-950/60 text-amber-400 border-amber-800/60"
-      : "bg-neutral-900 text-neutral-400 border-neutral-800";
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'CreativeWork',
+                '@id': `${pageUrl}#project`,
+                name: study.name,
+                description: study.description,
+                url: pageUrl,
+                sameAs: study.url,
+                genre: study.category,
+                keywords: [...study.scope, ...study.focusAreas].join(', '),
+                creator: { '@id': `${siteUrl}/#person` },
+                inLanguage: 'en',
+                isPartOf: { '@id': `${siteUrl}/#website` },
+            },
+            {
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                    { '@type': 'ListItem', position: 1, name: siteConfig.name, item: siteUrl },
+                    { '@type': 'ListItem', position: 2, name: 'Projects', item: `${siteUrl}/#work` },
+                    { '@type': 'ListItem', position: 3, name: study.name, item: pageUrl },
+                ],
+            },
+        ],
+    };
 
   return (
     <>
@@ -266,140 +268,57 @@ export default async function ProjectCaseStudyPage({ params }: PageProps) {
                             {ch.solution}
                           </p>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ) : null}
+                        <div className="grid gap-1 py-4 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-6 sm:py-5">
+                            <dt className={labelClass}>Focus areas</dt>
+                            <dd>
+                                <ul className="flex flex-wrap gap-2">
+                                    {study.focusAreas.map((area) => (
+                                        <li key={area}>
+                                            <Badge variant="secondary" className="h-auto rounded-full px-3.5 py-1.5 text-[13px] font-semibold sm:text-sm">
+                                                {area}
+                                            </Badge>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </dd>
+                        </div>
+                    </dl>
 
-          {/* Quality & Engineering Standards */}
-          {project.quality ? (
-            <section aria-labelledby="quality-heading" className="mb-16">
-              <h2
-                id="quality-heading"
-                className="text-xs uppercase tracking-wider text-neutral-400 font-mono mb-6"
-              >
-                Quality & Production Standards
-              </h2>
-              <div className="border border-neutral-800 rounded-2xl divide-y divide-neutral-800 bg-neutral-950">
-                <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <span className="text-xs uppercase tracking-wider text-neutral-500 font-medium">
-                    Auth & RBAC
-                  </span>
-                  <span className="md:col-span-3 text-sm text-neutral-300 leading-relaxed">
-                    {project.quality.authRbac}
-                  </span>
-                </div>
-                <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <span className="text-xs uppercase tracking-wider text-neutral-500 font-medium">
-                    Validation
-                  </span>
-                  <span className="md:col-span-3 text-sm text-neutral-300 leading-relaxed">
-                    {project.quality.validation}
-                  </span>
-                </div>
-                <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <span className="text-xs uppercase tracking-wider text-neutral-500 font-medium">
-                    Error Handling
-                  </span>
-                  <span className="md:col-span-3 text-sm text-neutral-300 leading-relaxed">
-                    {project.quality.errorHandling}
-                  </span>
-                </div>
-                <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <span className="text-xs uppercase tracking-wider text-neutral-500 font-medium">
-                    Performance
-                  </span>
-                  <span className="md:col-span-3 text-sm text-neutral-300 leading-relaxed">
-                    {project.quality.performance}
-                  </span>
-                </div>
-              </div>
-            </section>
-          ) : null}
+                    <a
+                        href={study.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Visit ${study.name} at ${study.urlLabel} (opens in a new tab)`}
+                        className="group mt-10 inline-flex w-fit items-center gap-3 border-b-2 border-foreground/80 pb-2.5 text-[17px] font-semibold tracking-[-0.022em] text-foreground transition-colors hover:border-brand hover:text-brand focus-visible:border-brand focus-visible:text-brand"
+                    >
+                        Visit project
+                        <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                        <span className="text-[15px] font-medium text-muted-foreground group-hover:text-brand">
+                            {study.urlLabel}
+                        </span>
+                    </a>
 
-          {/* Outcome & Impact */}
-          {project.outcome && project.outcome.length > 0 ? (
-            <section aria-labelledby="outcome-heading" className="mb-16">
-              <h2
-                id="outcome-heading"
-                className="text-xs uppercase tracking-wider text-neutral-400 font-mono mb-6"
-              >
-                Delivered Outcomes
-              </h2>
-              <ul className="space-y-3">
-                {project.outcome.map((item, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-3 text-neutral-300 text-sm md:text-base leading-relaxed"
-                  >
-                    <span className="text-neutral-500 select-none font-mono">
-                      —
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
-
-          {/* TODO Notes if present */}
-          {project.todoNotes && project.todoNotes.length > 0 ? (
-            <section
-              aria-labelledby="todo-heading"
-              className="mb-16 p-6 rounded-2xl border border-amber-800/40 bg-amber-950/20"
-            >
-              <h2
-                id="todo-heading"
-                className="text-xs uppercase tracking-wider text-amber-400 font-mono mb-3"
-              >
-                Verification & Source Notes
-              </h2>
-              <ul className="space-y-2">
-                {project.todoNotes.map((note, idx) => (
-                  <li
-                    key={idx}
-                    className="text-xs text-amber-300/90 font-mono leading-relaxed"
-                  >
-                    {note}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
-
-          {/* Action Links */}
-          <div className="pt-8 border-t border-neutral-800 flex flex-wrap items-center gap-6">
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium text-white border-b border-white pb-1 hover:text-neutral-300 hover:border-neutral-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
-            >
-              Visit project ↗{" "}
-              <span className="text-neutral-400 font-normal">
-                {project.liveUrlDisplay}
-              </span>
-            </a>
-
-            {project.adminUrl ? (
-              <a
-                href={project.adminUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-neutral-400 border-b border-neutral-700 pb-1 hover:text-white hover:border-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
-              >
-                Admin portal ↗{" "}
-                <span className="text-neutral-500 font-normal">
-                  ({project.adminStatus || "Internal"})
-                </span>
-              </a>
-            ) : null}
-          </div>
-        </div>
-      </main>
-    </>
-  );
+                    <section aria-labelledby="more-projects" className="mt-20 border-t border-border pt-10 sm:mt-28">
+                        <h2 id="more-projects" className={labelClass}>
+                            More projects
+                        </h2>
+                        <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
+                            {others.map((item) => (
+                                <li key={item.slug}>
+                                    <Link
+                                        href={`/projects/${item.slug}`}
+                                        className="text-[17px] font-semibold tracking-[-0.022em] text-foreground transition-colors hover:text-brand focus-visible:text-brand"
+                                    >
+                                        {item.name}
+                                    </Link>
+                                    <span className="block text-sm text-muted-foreground">{item.category}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                </article>
+            </main>
+            <JsonLd data={jsonLd} />
+        </>
+    );
 }
