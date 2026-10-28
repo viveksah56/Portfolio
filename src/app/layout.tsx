@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     metadataBase: new URL(siteUrl),
     title: { default: title, template: `%s | ${siteConfig.name}` },
     description,
+    keywords: [...seoData.keywords],
     applicationName: siteConfig.name,
     authors: [{ name: siteConfig.name, url: siteUrl }],
     creator: siteConfig.name,
@@ -76,7 +77,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     return (
         <html lang="en" data-theme={DEFAULT_THEME} suppressHydrationWarning>
         <head>
-            <title>{siteConfig.name}</title>
             <script dangerouslySetInnerHTML={{ __html: themeScript }} />
             <JsonLd data={structuredData} />
             {GA_ID && /^G-[A-Z0-9]+$/.test(GA_ID) && (
