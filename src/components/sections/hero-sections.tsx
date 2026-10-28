@@ -38,12 +38,12 @@ export default function HeroSections() {
                 </ScrollReveal>
 
                 <ScrollReveal className="mt-5" y={12} delay={100}>
-                    <p className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-background/60 px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-foreground">
+                    <p className="inline-flex w-fit items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-brand">
                         <span aria-hidden className="relative flex size-2">
                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60" />
                             <span className="relative inline-flex size-2 rounded-full bg-brand" />
                         </span>
-                        Available for Full Stack &amp; Senior Frontend Roles
+                        Available for Full Stack &amp; Frontend Roles
                     </p>
                 </ScrollReveal>
 
