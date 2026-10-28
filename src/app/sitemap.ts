@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { caseStudies } from '@/lib/projects';
+import { caseStudies } from '@/lib/case-studies';
 import { seoData } from '@/lib/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
