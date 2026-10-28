@@ -13,6 +13,30 @@ type CopyEmailProps = {
 
 const RESET_DELAY = 2000;
 
+function writeClipboard(text: string): Promise<boolean> {
+    if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
+        return navigator.clipboard.writeText(text).then(() => true).catch(() => legacyCopy(text));
+    }
+    return Promise.resolve(legacyCopy(text));
+}
+
+function legacyCopy(text: string): boolean {
+    try {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        return ok;
+    } catch {
+        return false;
+    }
+}
+
 export default function CopyEmail({ email, label, copiedLabel, className }: CopyEmailProps) {
     const [copied, setCopied] = useState(false);
     const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -24,13 +48,11 @@ export default function CopyEmail({ email, label, copiedLabel, className }: Copy
     }, []);
 
     const copy = async () => {
-        try {
-            await navigator.clipboard.writeText(email);
-            setCopied(true);
-            if (timer.current) clearTimeout(timer.current);
+        const ok = await writeClipboard(email);
+        setCopied(ok);
+        if (timer.current) clearTimeout(timer.current);
+        if (ok) {
             timer.current = setTimeout(() => setCopied(false), RESET_DELAY);
-        } catch {
-            setCopied(false);
         }
     };
 
