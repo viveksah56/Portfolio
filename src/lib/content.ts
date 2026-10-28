@@ -1,7 +1,6 @@
 // Superseded by src/lib/constants.ts and src/lib/case-studies.ts.
 // Safe to delete this file in a follow-up commit.
 
-<<<<<<< HEAD
 export type Project = {
     slug: string;
     number: string;
@@ -156,6 +155,3 @@ export const experience = [
         tags: ['React.js', 'Next.js', 'TypeScript', 'Java', 'Spring Boot', 'Node.js', 'MongoDB'],
     },
 ];
-=======
-export {};
->>>>>>> origin/fix/bugs-seo-case-studies-ci
