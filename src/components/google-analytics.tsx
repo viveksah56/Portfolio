@@ -1,28 +1,6 @@
-
-"use client";
-
-import Script from "next/script";
-
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-
+// Removed: this component duplicated GA wiring already handled in app/layout.tsx.
+// GA/GTM load conditionally from NEXT_PUBLIC_GA_ID / NEXT_PUBLIC_GTM_ID in the layout.
+// Safe to delete this file in a follow-up commit.
 export default function GoogleAnalytics() {
-    if (!GA_ID || !/^G-[A-Z0-9]+$/.test(GA_ID)) return null;
-
-    return (
-        <>
-            <Script
-                src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-                strategy="afterInteractive"
-            />
-            <Script id="ga4-init" strategy="afterInteractive">
-                {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          window.gtag = gtag;
-          gtag('js', new Date());
-          gtag('config', '${GA_ID}');
-        `}
-            </Script>
-        </>
-    );
+    return null;
 }
