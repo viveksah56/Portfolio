@@ -1,0 +1,1 @@
+export const splashInitScript = `(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.dataset.splash='seen'}catch(e){}})();`;

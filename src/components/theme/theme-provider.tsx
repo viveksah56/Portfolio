@@ -12,26 +12,8 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 const listeners = new Set<() => void>();
 
-function subscribe(callback: () => void) {
-    listeners.add(callback);
-    window.addEventListener('storage', callback);
-    return () => {
-        listeners.delete(callback);
-        window.removeEventListener('storage', callback);
-    };
-}
-
-function getSnapshot(): Theme {
-    try {
-        const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
-        return isTheme(stored) ? stored : DEFAULT_THEME;
-    } catch {
-        return DEFAULT_THEME;
-    }
-}
-
-function getServerSnapshot(): Theme {
-    return DEFAULT_THEME;
+function emit() {
+    listeners.forEach((listener) => listener());
 }
 
 function applyTheme(theme: Theme) {
@@ -46,6 +28,40 @@ function applyTheme(theme: Theme) {
     meta.content = THEME_COLORS[theme];
 }
 
+function persistTheme(theme: Theme) {
+    try {
+        window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {
+        return false;
+    }
+    return true;
+}
+
+function subscribe(callback: () => void) {
+    listeners.add(callback);
+
+    const onStorage = (event: StorageEvent) => {
+        if (event.key !== THEME_STORAGE_KEY) return;
+        applyTheme(isTheme(event.newValue) ? event.newValue : DEFAULT_THEME);
+        callback();
+    };
+
+    window.addEventListener('storage', onStorage);
+    return () => {
+        listeners.delete(callback);
+        window.removeEventListener('storage', onStorage);
+    };
+}
+
+function getSnapshot(): Theme {
+    const value = document.documentElement.dataset.theme;
+    return isTheme(value) ? value : DEFAULT_THEME;
+}
+
+function getServerSnapshot(): Theme {
+    return DEFAULT_THEME;
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
     const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
@@ -54,11 +70,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }, [theme]);
 
     const setTheme = useCallback((next: Theme) => {
-        try {
-            window.localStorage.setItem(THEME_STORAGE_KEY, next);
-        } catch {
-        }
-        listeners.forEach((listener) => listener());
+        persistTheme(next);
+        applyTheme(next);
+        emit();
     }, []);
 
     const value = useMemo(() => ({ theme, setTheme }), [theme, setTheme]);

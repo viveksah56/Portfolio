@@ -5,9 +5,10 @@
 @custom-variant dark (&:where([data-theme='midnight'], [data-theme='midnight'] *));
 
 @theme inline {
-  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
-  --font-serif: 'Newsreader', 'Iowan Old Style', 'Apple Garamond', 'Baskerville', 'Times New Roman', 'Georgia', serif;
-  --font-heading: var(--font-serif);
+  --font-sans: var(--theme-sans);
+  --font-serif: var(--theme-heading);
+  --font-heading: var(--theme-heading);
+  --font-mono: var(--theme-mono);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -50,10 +51,14 @@
 }
 
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
   color-scheme: light;
+
+  --theme-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --theme-heading: var(--font-geist), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --theme-mono: var(--font-geist-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --heading-weight: 600;
+  --body-tracking: -0.011em;
 
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -90,30 +95,13 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-[data-theme='porcelain'] {
-  color-scheme: light;
-  --background: #f7f6f2;
-  --foreground: #2a2b2f;
-  --card: #fbfaf7;
-  --card-foreground: #2a2b2f;
-  --popover: #f7f6f2;
-  --popover-foreground: #2a2b2f;
-  --primary: #2a2b2f;
-  --primary-foreground: #f7f6f2;
-  --secondary: rgb(42 43 47 / 0.06);
-  --secondary-foreground: #2a2b2f;
-  --muted: rgb(42 43 47 / 0.06);
-  --muted-foreground: #6f7077;
-  --accent: rgb(42 43 47 / 0.06);
-  --accent-foreground: #2a2b2f;
-  --border: rgb(42 43 47 / 0.1);
-  --input: rgb(42 43 47 / 0.1);
-  --ring: #b85c46;
-  --brand: #b85c46;
-}
-
 [data-theme='midnight'] {
   color-scheme: dark;
+  --theme-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --theme-heading: var(--font-geist), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --theme-mono: var(--font-geist-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --heading-weight: 600;
+  --body-tracking: -0.011em;
   --background: #000000;
   --foreground: #ededed;
   --card: #0a0a0a;
@@ -148,8 +136,40 @@
   --sidebar-ring: #52a8ff;
 }
 
+[data-theme='porcelain'] {
+  color-scheme: light;
+  --theme-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --theme-heading: var(--font-fraunces), 'Iowan Old Style', Georgia, serif;
+  --theme-mono: var(--font-geist-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --heading-weight: 500;
+  --body-tracking: -0.011em;
+  --background: #f7f6f2;
+  --foreground: #2a2b2f;
+  --card: #fbfaf7;
+  --card-foreground: #2a2b2f;
+  --popover: #f7f6f2;
+  --popover-foreground: #2a2b2f;
+  --primary: #2a2b2f;
+  --primary-foreground: #f7f6f2;
+  --secondary: rgb(42 43 47 / 0.06);
+  --secondary-foreground: #2a2b2f;
+  --muted: rgb(42 43 47 / 0.06);
+  --muted-foreground: #6f7077;
+  --accent: rgb(42 43 47 / 0.06);
+  --accent-foreground: #2a2b2f;
+  --border: rgb(42 43 47 / 0.1);
+  --input: rgb(42 43 47 / 0.1);
+  --ring: #b85c46;
+  --brand: #b85c46;
+}
+
 [data-theme='sage'] {
   color-scheme: light;
+  --theme-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --theme-heading: var(--font-newsreader), 'Iowan Old Style', Georgia, serif;
+  --theme-mono: var(--font-geist-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --heading-weight: 500;
+  --body-tracking: -0.011em;
   --background: #e6ecd9;
   --foreground: #1e2b1a;
   --card: #f1f5e8;
@@ -186,6 +206,11 @@
 
 [data-theme='blue'] {
   color-scheme: light;
+  --theme-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+  --theme-heading: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+  --theme-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --heading-weight: 600;
+  --body-tracking: -0.022em;
   --background: #f5f5f7;
   --foreground: #1d1d1f;
   --card: #ffffff;
@@ -222,6 +247,11 @@
 
 [data-theme='claude'] {
   color-scheme: light;
+  --theme-sans: var(--font-newsreader), 'Iowan Old Style', Georgia, serif;
+  --theme-heading: var(--font-newsreader), 'Iowan Old Style', Georgia, serif;
+  --theme-mono: var(--font-geist-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --heading-weight: 500;
+  --body-tracking: 0em;
   --background: #faf9f5;
   --foreground: #141413;
   --card: #ffffff;
@@ -274,19 +304,25 @@
     @apply bg-background text-foreground antialiased;
     min-height: 100svh;
     overflow-x: clip;
+    font-family: var(--theme-sans);
     font-size: 17px;
     line-height: 1.47059;
-    letter-spacing: -0.022em;
+    letter-spacing: var(--body-tracking);
     font-feature-settings: 'kern' 1, 'liga' 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     overflow-wrap: break-word;
     transition: background-color 0.35s ease, color 0.35s ease;
   }
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--theme-heading);
+    font-weight: var(--heading-weight);
+  }
+
   h1 {
     font-size: clamp(2.5rem, 6vw + 1rem, 5rem);
-    font-weight: 600;
     line-height: 1.05;
     letter-spacing: -0.015em;
     text-wrap: balance;
@@ -294,7 +330,6 @@
 
   h2 {
     font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
-    font-weight: 600;
     line-height: 1.08;
     letter-spacing: -0.012em;
     text-wrap: balance;
@@ -302,7 +337,6 @@
 
   h3 {
     font-size: clamp(1.5rem, 2vw + 0.75rem, 2rem);
-    font-weight: 600;
     line-height: 1.125;
     letter-spacing: -0.008em;
     text-wrap: balance;
@@ -310,7 +344,6 @@
 
   h4 {
     font-size: clamp(1.125rem, 1vw + 0.9rem, 1.375rem);
-    font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.01em;
   }
@@ -346,27 +379,27 @@
   }
 
   .type-display {
-    font-family: var(--font-serif);
+    font-family: var(--theme-heading);
     font-size: clamp(2.125rem, 6.5vw + 0.5rem, 5.5rem);
-    font-weight: 500;
+    font-weight: var(--heading-weight);
     line-height: 1.08;
     letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
   .type-headline {
-    font-family: var(--font-serif);
+    font-family: var(--theme-heading);
     font-size: clamp(1.875rem, 4.2vw + 0.5rem, 3.25rem);
-    font-weight: 500;
+    font-weight: var(--heading-weight);
     line-height: 1.1;
     letter-spacing: -0.015em;
     text-wrap: balance;
   }
 
   .type-title {
-    font-family: var(--font-serif);
+    font-family: var(--theme-heading);
     font-size: clamp(1.375rem, 2vw + 0.75rem, 2rem);
-    font-weight: 500;
+    font-weight: var(--heading-weight);
     line-height: 1.15;
     letter-spacing: -0.01em;
     text-wrap: balance;
@@ -384,7 +417,7 @@
     font-size: 1.0625rem;
     font-weight: 400;
     line-height: 1.47059;
-    letter-spacing: -0.022em;
+    letter-spacing: var(--body-tracking);
     text-wrap: pretty;
   }
 
@@ -392,7 +425,7 @@
     font-size: 1.0625rem;
     font-weight: 600;
     line-height: 1.1;
-    letter-spacing: -0.022em;
+    letter-spacing: var(--body-tracking);
   }
 
   .type-caption {
@@ -400,6 +433,11 @@
     line-height: 1.33;
     letter-spacing: -0.01em;
   }
+}
+
+@utility cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
 }
 
 .nav-link {
@@ -428,14 +466,15 @@
   border: 1px solid var(--border);
   opacity: 0.7;
   pointer-events: none;
+  contain: paint;
   background:
-          radial-gradient(circle at 50% 42%, color-mix(in oklab, var(--brand) 14%, transparent) 0%, transparent 38%),
-          repeating-radial-gradient(
-                  circle at 50% 50%,
-                  transparent 0 3.2rem,
-                  color-mix(in oklab, var(--foreground) 6%, transparent) 3.2rem calc(3.2rem + 1px)
-          ),
-          color-mix(in oklab, var(--foreground) 5%, transparent);
+    radial-gradient(circle at 50% 42%, color-mix(in oklab, var(--brand) 14%, transparent) 0%, transparent 38%),
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      transparent 0 3.2rem,
+      color-mix(in oklab, var(--foreground) 6%, transparent) 3.2rem calc(3.2rem + 1px)
+    ),
+    color-mix(in oklab, var(--foreground) 5%, transparent);
 }
 
 .hero-glow {
@@ -446,8 +485,7 @@
   width: 70vw;
   aspect-ratio: 1;
   border-radius: 9999px;
-  filter: blur(60px);
-  opacity: 0.55;
+  opacity: 0.4;
   pointer-events: none;
   background: radial-gradient(circle, color-mix(in oklab, var(--brand) 85%, transparent) 0%, transparent 65%);
 }
@@ -483,10 +521,6 @@
   html {
     scroll-padding-top: 5rem;
   }
-
-  .hero-glow {
-    filter: blur(40px);
-  }
 }
 
 @media (min-width: 641px) and (max-width: 1023px) {
@@ -514,7 +548,7 @@
     right: -8vw;
     bottom: -18vh;
     width: 34vw;
-    opacity: 0.7;
+    opacity: 0.5;
   }
 }
 
@@ -547,10 +581,7 @@
     animation: none;
   }
 
-  .nav-link {
-    transition: none;
-  }
-
+  .nav-link,
   body {
     transition: none;
   }
