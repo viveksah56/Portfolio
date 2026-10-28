@@ -1,8 +1,14 @@
+export const EMAIL = 'sahbibek55@gmail.com';
+export const GITHUB = 'https://github.com/viveksah56';
+export const LINKEDIN = 'https://www.linkedin.com/in/bibek-s-1067aa1a4/';
+export const CV_REQUEST = `mailto:${EMAIL}?subject=Request%20for%20your%20CV`;
+export const PHONE = '+977 9804733759';
+
 export const siteConfig = {
     name: 'Bibek Sah',
     role: 'Full Stack Developer',
     location: 'Kathmandu, Nepal',
-    email: 'sahbibek55@gmail.com',
+    email: EMAIL,
     headline: ['Frontend experiences.', 'Backend systems.'],
     highlight: 'Built for real-world impact.',
     description:
@@ -285,13 +291,13 @@ export const contactData = {
     copiedLabel: 'Copied',
     copyrightYear: 2026,
     details: [
-        { label: 'Email', value: siteConfig.email, isEmail: true },
+        { label: 'Email', value: EMAIL, isEmail: true },
         { label: 'Location', value: siteConfig.location, isEmail: false },
         { label: 'Availability', value: 'Open to full-time Full Stack Developer roles', isEmail: false },
         { label: 'Response time', value: 'Within 24 hours', isEmail: false },
     ],
     socials: [
-        { label: 'GitHub', href: 'https://github.com/viveksah56' },
-        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/bibek-s-1067aa1a4' },
+        { label: 'GitHub', href: GITHUB },
+        { label: 'LinkedIn', href: LINKEDIN },
     ],
 } as const;
