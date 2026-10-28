@@ -8,7 +8,7 @@ const itemClass =
 export default function WorkSection() {
     return (
         <section
-            id="work"
+            id="metrics"
             aria-labelledby="work-heading"
             className="relative isolate overflow-hidden bg-foreground py-14 text-background sm:py-20 lg:py-24"
         >
@@ -25,9 +25,11 @@ export default function WorkSection() {
                 <ScrollReveal y={16} duration={0.7}>
                     <h2
                         id="work-heading"
-                        className="type-caption flex items-center gap-4 font-semibold uppercase tracking-[0.2em] text-background/60 sm:text-sm"
+                        className="type-caption flex items-center gap-4 font-semibold uppercase tracking-[0.2em] text-background/70 sm:text-sm"
                     >
-                        <span className="text-brand">04</span>
+                        <span className="rounded-full bg-background/20 px-2.5 py-0.5 text-xs font-bold text-background ring-1 ring-background/30">
+                            04
+                        </span>
                         <span>By the numbers</span>
                     </h2>
                 </ScrollReveal>

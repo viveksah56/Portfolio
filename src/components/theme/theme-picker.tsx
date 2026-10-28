@@ -34,7 +34,7 @@ function ThemePicker({ theme, setTheme }: ThemePickerProps) {
             <div
                 role="group"
                 aria-label="Color theme"
-                className="flex items-center gap-0.5 rounded-full border border-border bg-foreground/3 p-0.5 sm:gap-1 sm:p-1"
+                className="flex items-center gap-1 rounded-full border border-border bg-foreground/3 p-1 sm:p-1"
             >
                 {themes.map((option) => {
                     const isActive = theme === option.value;
@@ -54,7 +54,7 @@ function ThemePicker({ theme, setTheme }: ThemePickerProps) {
                                         aria-label={`Use ${option.label} theme`}
                                         aria-pressed={isActive}
                                         className={cn(
-                                            'size-8 shrink-0 rounded-full p-0 transition-colors hover:bg-foreground/5 sm:size-9',
+                                            'size-9 shrink-0 rounded-full p-0 transition-colors hover:bg-foreground/5 sm:size-9.5',
                                             isActive && 'bg-foreground/[0.07]',
                                         )}
                                     />

@@ -240,13 +240,11 @@ export const selectedProjectsData = {
 } as const;
 
 export const skillGroups = [
-    { label: 'Frontend', items: ['React.js', 'Next.js', 'TypeScript', 'JavaScript (ES6+)', 'HTML5', 'CSS3'] },
-    { label: 'Backend', items: ['Java', 'Spring Boot', 'Node.js', 'Express.js', 'RESTful APIs', 'JWT and OAuth'] },
-    { label: 'Database', items: ['MongoDB', 'MySQL', 'PostgreSQL', 'Redis', 'Mongoose'] },
-    { label: 'UI and styling', items: ['Tailwind CSS', 'Shadcn/UI', 'Styled Components', 'Component-driven design'] },
-    { label: 'State and data', items: ['Context API', 'Zustand', 'React Query', 'React Hook Form', 'Zod'] },
-    { label: 'Performance and SEO', items: ['SSR', 'SSG', 'ISR', 'Code splitting', 'Lazy loading', 'SEO optimization'] },
-    { label: 'Tools and delivery', items: ['Git', 'GitHub', 'Docker', 'CI/CD', 'Vercel', 'Render', 'Postman'] },
+    { label: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'Tailwind', 'Shadcn/UI', 'Styled Components'] },
+    { label: 'Backend', items: ['Java', 'Spring Boot', 'Node.js', 'Express.js', 'REST APIs', 'JWT'] },
+    { label: 'Data', items: ['MongoDB', 'MySQL', 'PostgreSQL', 'Mongoose'] },
+    { label: 'State & Forms', items: ['Context API', 'Zustand', 'React Query', 'React Hook Form', 'Zod'] },
+    { label: 'Tooling', items: ['Git', 'GitHub', 'Docker', 'Postman', 'Vercel', 'Render', 'Cloudinary'] },
     { label: 'Testing', items: ['Jest', 'React Testing Library'] },
 ] as const;
 
@@ -257,8 +255,8 @@ export const educationData = [
         status: 'In progress',
     },
     {
-        title: 'BSc (Hons) Computer Systems Engineering (IT)',
-        institution: 'ISMT College, Kathmandu',
+        title: 'BSc (Hons) Computer Systems Engineering',
+        institution: 'ISMT College, Kathmandu [TODO(Bibek): Confirm awarding university]',
         status: 'Graduated 2023',
     },
     {

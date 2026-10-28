@@ -24,7 +24,7 @@ export function ScrollReveal({
                                  scale = 1,
                                  duration = 0.8,
                                  amount = 0.15,
-                                 once = false,
+                                 once = true,
                              }: ScrollRevealProps) {
     const reduce = useReducedMotion();
 

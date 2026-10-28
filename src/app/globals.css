@@ -6,7 +6,8 @@
 
 @theme inline {
   --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
-  --font-heading: var(--font-sans);
+  --font-serif: 'Newsreader', 'Iowan Old Style', 'Apple Garamond', 'Baskerville', 'Times New Roman', 'Georgia', serif;
+  --font-heading: var(--font-serif);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -345,26 +346,29 @@
   }
 
   .type-display {
-    font-size: clamp(2.5rem, 7.5vw + 0.25rem, 6rem);
-    font-weight: 600;
-    line-height: 1.0625;
-    letter-spacing: -0.015em;
+    font-family: var(--font-serif);
+    font-size: clamp(2.125rem, 6.5vw + 0.5rem, 5.5rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
   .type-headline {
-    font-size: clamp(2rem, 4.5vw + 0.5rem, 3.5rem);
-    font-weight: 600;
-    line-height: 1.0834;
-    letter-spacing: -0.005em;
+    font-family: var(--font-serif);
+    font-size: clamp(1.875rem, 4.2vw + 0.5rem, 3.25rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
 
   .type-title {
-    font-size: clamp(1.5rem, 2.2vw + 0.75rem, 2.125rem);
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: 0.004em;
+    font-family: var(--font-serif);
+    font-size: clamp(1.375rem, 2vw + 0.75rem, 2rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     text-wrap: balance;
   }
 

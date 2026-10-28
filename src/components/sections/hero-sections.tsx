@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight, FileText, Mail } from 'lucide-react';
 import HeroBackdrop from '@/components/hero-backdrop';
 import ScrollReveal from '@/components/scroll-reveal';
 import { buttonVariants } from '@/components/ui/button';
@@ -10,11 +10,16 @@ const emailHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent('Proj
 
 const primaryButtonClass = cn(
     buttonVariants({ size: 'lg' }),
-    'type-button h-10 w-full gap-2 rounded-full bg-primary px-5 text-primary-foreground transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--foreground)_45%,transparent)] active:translate-y-0 sm:h-11 sm:w-auto sm:px-6',
+    'type-button h-11 w-full gap-2 rounded-full bg-primary px-5 text-primary-foreground transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--foreground)_45%,transparent)] active:translate-y-0 sm:h-11 sm:w-auto sm:px-6',
+);
+
+const secondaryButtonClass = cn(
+    buttonVariants({ variant: 'outline', size: 'lg' }),
+    'type-button h-11 w-full gap-2 rounded-full border-border bg-background/80 px-5 text-foreground transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5 hover:border-brand/60 hover:text-brand sm:h-11 sm:w-auto sm:px-6',
 );
 
 const textLinkClass =
-    'type-button inline-flex w-fit items-center gap-2.5 border-b-2 border-foreground/80 pb-2.5 text-foreground transition-colors hover:border-brand hover:text-brand focus-visible:border-brand focus-visible:text-brand';
+    'type-button inline-flex w-fit items-center gap-2 border-b-2 border-foreground/70 pb-2 text-foreground transition-colors hover:border-brand hover:text-brand focus-visible:border-brand focus-visible:text-brand';
 
 export default function HeroSections() {
     return (
@@ -54,14 +59,24 @@ export default function HeroSections() {
                 </ScrollReveal>
 
                 <ScrollReveal className="mt-8 sm:mt-10" y={24} delay={320}>
-                    <div className="flex flex-col items-stretch gap-x-8 gap-y-6 sm:flex-row sm:flex-wrap sm:items-center">
+                    <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5">
                         <Link href="#work" className={primaryButtonClass}>
-                            View work
+                            View selected work
                             <ArrowRight className="size-4" aria-hidden="true" />
                         </Link>
 
+                        <a
+                            href="/Bibek-Sah-Resume.pdf"
+                            download="Bibek-Sah-Resume.pdf"
+                            className={secondaryButtonClass}
+                            aria-label="Download Bibek Sah's resume PDF"
+                        >
+                            <FileText className="size-4" aria-hidden="true" />
+                            Download résumé
+                        </a>
+
                         <a href={emailHref} className={textLinkClass}>
-                            <Mail className="size-5" aria-hidden="true" />
+                            <Mail className="size-4.5" aria-hidden="true" />
                             Email me
                         </a>
                     </div>

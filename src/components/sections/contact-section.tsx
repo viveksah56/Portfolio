@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail } from 'lucide-react';
+import { ArrowUpRight, FileText, Mail } from 'lucide-react';
 import CopyEmail from '@/components/copy-email';
 import CurrentYear from '@/components/current-year';
 import ScrollReveal from '@/components/scroll-reveal';
@@ -11,7 +11,7 @@ const labelClass = 'text-[11px] font-semibold uppercase tracking-[0.2em] text-mu
 const emailHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent(contactData.emailSubject)}`;
 
 const primaryButtonClass =
-    'inline-flex h-10 items-center justify-center gap-2 rounded-full bg-primary px-5 text-[15px] font-medium tracking-[-0.016em] text-primary-foreground outline-none transition-[background-color,transform,box-shadow] duration-300 hover:bg-primary/90 hover:shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--foreground)_45%,transparent)] focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98] sm:h-11 sm:px-6';
+    'inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-[15px] font-medium tracking-[-0.016em] text-primary-foreground outline-none transition-[background-color,transform,box-shadow] duration-300 hover:bg-primary/90 hover:shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--foreground)_45%,transparent)] focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98] sm:h-11 sm:px-6';
 
 export default function ContactSection() {
     const { section, title, headline, intro, primaryLabel, copyLabel, copiedLabel, copyrightYear, details, socials } =
@@ -61,6 +61,15 @@ export default function ContactSection() {
                                 {primaryLabel}
                             </a>
                             <CopyEmail email={siteConfig.email} label={copyLabel} copiedLabel={copiedLabel} />
+                            <a
+                                href="/Bibek-Sah-Resume.pdf"
+                                download="Bibek-Sah-Resume.pdf"
+                                className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border bg-background px-5 text-[15px] font-medium tracking-[-0.016em] text-foreground outline-none transition-[border-color,color,box-shadow] duration-300 hover:border-brand hover:text-brand focus-visible:ring-2 focus-visible:ring-ring sm:h-11 sm:px-6"
+                                aria-label="Download Bibek Sah's resume PDF"
+                            >
+                                <FileText className="size-4" aria-hidden="true" />
+                                Download résumé
+                            </a>
                         </div>
                     </ScrollReveal>
 
