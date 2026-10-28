@@ -10,6 +10,8 @@ export type CaseStudyHighlight = {
     value: string;
 };
 
+type SelectedProject = (typeof selectedProjectsData.projects)[number];
+
 export type CaseStudy = {
     index: string;
     category: string;
@@ -38,6 +40,8 @@ export function slugify(name: string): string {
         .replace(/^-+|-+$/g, '');
 }
 
+type CaseStudyBody = Pick<CaseStudy, 'challenge' | 'process' | 'outcome' | 'reflection' | 'highlights'>;
+
 const applyMyFileProject = {
     index: '06',
     category: 'Consultancy platform',
@@ -52,12 +56,10 @@ const applyMyFileProject = {
     url: 'https://www.applymyfile.com',
     urlLabel: 'applymyfile.com',
     visualPosition: 'right',
-} as const;
+} as const satisfies Omit<SelectedProject, 'index'>;
 
-const details: Record<string, Omit<CaseStudy, 'slug' | keyof typeof selectedProjectsData.projects[number]>> = {} as never;
-
-const caseStudyContent: Record<string, Pick<CaseStudy, 'challenge' | 'process' | 'outcome' | 'reflection' | 'highlights'>> = {
-    'examnepal': {
+const caseStudyContent: Record<string, CaseStudyBody> = {
+    examnepal: {
         challenge:
             'Institutes and corporate organizations were running mock tests, assessments, and analytics on fragmented tools with no shared platform for exam delivery, question banks, or user management.',
         process: [
@@ -92,7 +94,7 @@ const caseStudyContent: Record<string, Pick<CaseStudy, 'challenge' | 'process' |
             { label: 'Backend', value: 'Java/Spring Boot REST APIs with PostgreSQL' },
         ],
     },
-    'medishop': {
+    medishop: {
         challenge:
             'Healthcare commerce needs trustworthy product discovery and purchasing for customers, while operations need tight control over inventory, orders, and customers — two workloads that pull the product in different directions.',
         process: [
@@ -157,7 +159,7 @@ const caseStudyContent: Record<string, Pick<CaseStudy, 'challenge' | 'process' |
             { label: 'Stack', value: 'Node.js/Express.js + MongoDB with Cloudinary media' },
         ],
     },
-    'lookscart': {
+    lookscart: {
         challenge:
             'Eyewear shoppers browse across prescription glasses, sunglasses, and fashion eyewear — the hard part is keeping the path from discovery to payment smooth for every category.',
         process: [
@@ -217,7 +219,7 @@ const caseStudyContent: Record<string, Pick<CaseStudy, 'challenge' | 'process' |
             { label: 'Deployment', value: 'Render' },
         ],
     },
-    'applymyfile': {
+    applymyfile: {
         challenge:
             'Visa, documentation, and application services involve long, multi-step client workflows that were previously scattered across offices, emails, and manual checklists.',
         process: [
@@ -249,17 +251,19 @@ const caseStudyContent: Record<string, Pick<CaseStudy, 'challenge' | 'process' |
     },
 };
 
-function toCaseStudy(project: Omit<typeof selectedProjectsData.projects[number], keyof object> | typeof applyMyFileProject): CaseStudy {
+function toCaseStudy(
+    project:
+        | (SelectedProject & Record<string, unknown>)
+        | (typeof applyMyFileProject & Record<string, unknown>),
+): CaseStudy {
     const slug = slugify(project.name);
-    const content = caseStudyContent[slug];
-    if (!content) throw new Error(`Missing case study content for slug: ${slug}`);
-    return { ...project, slug, ...content };
+    const body = caseStudyContent[slug];
+    if (!body) throw new Error(`Missing case study content for slug: ${slug}`);
+    return { ...project, slug, ...body };
 }
 
 export const caseStudies: readonly CaseStudy[] = [
-    ...selectedProjectsData.projects.map((project) =>
-        toCaseStudy(project as unknown as Parameters<typeof toCaseStudy>[0]),
-    ),
+    ...selectedProjectsData.projects.map((project) => toCaseStudy(project as never)),
     toCaseStudy(applyMyFileProject),
 ];
 
