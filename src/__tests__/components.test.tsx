@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import CurrentYear from '@/components/current-year';
 import JsonLd from '@/components/json-ld';
-import Icon from '@/components/icon';
+import { Icon } from '@/components/icon';
 
 describe('CurrentYear', () => {
     it('renders the current year', () => {

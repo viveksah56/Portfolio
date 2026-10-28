@@ -64,6 +64,9 @@ export default function CountUp({
 
     const formattedDisplay = pad ? String(display).padStart(pad, '0') : String(display);
 
+    // aria-label carries the final value for screen readers; the animated
+    // digits are aria-hidden so the label is announced exactly once.
+    // No sr-only duplicate text, so text extraction no longer reads "13+1012…".
     return (
         <span
             ref={ref}
@@ -74,7 +77,6 @@ export default function CountUp({
                 {formattedDisplay}
                 {suffix}
             </span>
-            <span className="sr-only">{`${formattedTarget}${suffix}`}</span>
         </span>
     );
 }

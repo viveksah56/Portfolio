@@ -76,7 +76,12 @@ const themeScript = `(function(){try{var t=localStorage.getItem(${JSON.stringify
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
     return (
-        <html lang="en" data-theme={DEFAULT_THEME} suppressHydrationWarning>
+        <html
+            lang="en"
+            data-theme={DEFAULT_THEME}
+            data-scroll-behavior="smooth"
+            suppressHydrationWarning
+        >
         <head>
             <script dangerouslySetInnerHTML={{ __html: themeScript }} />
             <JsonLd data={structuredData} />

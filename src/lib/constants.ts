@@ -44,7 +44,7 @@ export const experienceData = {
             position: 'Full Stack Developer',
             company: 'Dwork IT Solutions',
             description:
-                'Architected and delivered 13+ enterprise-level web applications across healthcare, education, e-commerce, and corporate sectors. Built React.js, Next.js, and TypeScript frontends backed by Java/Spring Boot and Node.js/Express.js REST APIs, with MongoDB, MySQL, and PostgreSQL databases. Implemented JWT authentication, role-based dashboards, a reusable Tailwind CSS and Shadcn/UI component library, and SSR, SSG, and ISR rendering that improved load times and Core Web Vitals.',
+                'Architected and delivered 13+ enterprise-level web applications end-to-end across healthcare, education, e-commerce, and corporate sectors. Built React.js, Next.js, and TypeScript frontends backed by Java/Spring Boot and Node.js/Express.js REST APIs, with MongoDB, MySQL, PostgreSQL, and Redis. Designed database schemas and JWT/OAuth-based authentication, built reusable Tailwind CSS and Shadcn/UI component libraries reused across all 13+ production projects, implemented Context API and Zustand state management on data-heavy admin dashboards with role-based access control, and applied SSR, SSG, and ISR with code splitting and lazy loading to improve load times and Core Web Vitals.',
             technologies: [
                 'React.js',
                 'Next.js',
@@ -56,8 +56,11 @@ export const experienceData = {
                 'MongoDB',
                 'MySQL',
                 'PostgreSQL',
+                'Redis',
                 'Tailwind CSS',
                 'Shadcn/UI',
+                'Zustand',
+                'JWT/OAuth',
             ],
         },
     ],
@@ -246,12 +249,14 @@ export const selectedProjectsData = {
 } as const;
 
 export const skillGroups = [
-    { label: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'Tailwind', 'Shadcn/UI', 'Styled Components'] },
-    { label: 'Backend', items: ['Java', 'Spring Boot', 'Node.js', 'Express.js', 'REST APIs', 'JWT'] },
-    { label: 'Data', items: ['MongoDB', 'MySQL', 'PostgreSQL', 'Mongoose'] },
-    { label: 'State & Forms', items: ['Context API', 'Zustand', 'React Query', 'React Hook Form', 'Zod'] },
-    { label: 'Tooling', items: ['Git', 'GitHub', 'Docker', 'Postman', 'Vercel', 'Render', 'Cloudinary'] },
+    { label: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'JavaScript (ES6+)', 'HTML5', 'CSS3', 'Tailwind', 'Shadcn/UI', 'Styled Components'] },
+    { label: 'Backend', items: ['Java', 'Spring Boot', 'Node.js', 'Express.js', 'REST APIs', 'JWT/OAuth', 'GraphQL'] },
+    { label: 'Data', items: ['MongoDB', 'MySQL', 'PostgreSQL', 'Redis', 'Mongoose'] },
+    { label: 'State & Forms', items: ['Context API', 'Zustand', 'React Query', 'React Hook Form', 'Zod', 'Yup'] },
+    { label: 'API & Integration', items: ['Axios', 'Fetch API'] },
+    { label: 'Tooling', items: ['Git', 'GitHub', 'CI/CD', 'Docker', 'Postman', 'Vercel', 'Render', 'Cloudinary', 'Webpack', 'Vite'] },
     { label: 'Testing', items: ['Jest', 'React Testing Library'] },
+    { label: 'Methodologies', items: ['Agile/Scrum', 'Clean Code Architecture', 'Test-Driven Development'] },
 ] as const;
 
 export const educationData = [
@@ -261,8 +266,8 @@ export const educationData = [
         status: 'In progress',
     },
     {
-        title: 'BSc (Hons) Computer Systems Engineering',
-        institution: 'ISMT College, Kathmandu [TODO(Bibek): Confirm awarding university]',
+        title: 'BSc (Hons) Computer Systems Engineering (IT)',
+        institution: 'University of Sunderland — ISMT College, Kathmandu',
         status: 'Graduated 2023',
     },
     {
