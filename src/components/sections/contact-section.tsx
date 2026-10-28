@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail } from 'lucide-react';
+import { ArrowUpRight, FileText, Mail } from 'lucide-react';
 import CopyEmail from '@/components/copy-email';
 import CurrentYear from '@/components/current-year';
 import ScrollReveal from '@/components/scroll-reveal';
@@ -61,6 +61,15 @@ export default function ContactSection() {
                                 {primaryLabel}
                             </a>
                             <CopyEmail email={siteConfig.email} label={copyLabel} copiedLabel={copiedLabel} />
+                            <a
+                                href="/Bibek-Sah-Resume.pdf"
+                                download="Bibek-Sah-Resume.pdf"
+                                className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border bg-background px-5 text-[15px] font-medium tracking-[-0.016em] text-foreground outline-none transition-[border-color,color,box-shadow] duration-300 hover:border-brand hover:text-brand focus-visible:ring-2 focus-visible:ring-ring sm:h-11 sm:px-6"
+                                aria-label="Download Bibek Sah's resume PDF"
+                            >
+                                <FileText className="size-4" aria-hidden="true" />
+                                Download résumé
+                            </a>
                         </div>
                     </ScrollReveal>
 

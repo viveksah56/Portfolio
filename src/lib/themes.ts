@@ -1,6 +1,6 @@
 export type Theme = 'porcelain' | 'midnight' | 'sage' | 'blue' | 'claude';
 
-export const DEFAULT_THEME: Theme = 'midnight';
+export const DEFAULT_THEME: Theme = 'porcelain';
 export const THEME_STORAGE_KEY = 'theme';
 
 export const themes: Array<{ value: Theme; label: string; color: string }> = [
