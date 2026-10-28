@@ -1,13 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import CurrentYear from '@/components/current-year';
 import JsonLd from '@/components/json-ld';
 import { Icon } from '@/components/icon';
 
 describe('CurrentYear', () => {
     it('renders the current year', () => {
-        render(<CurrentYear fallback={2026} />);
-        expect(screen.getByText(String(new Date().getFullYear()))).toBeInTheDocument();
+        const { container } = render(<CurrentYear fallback={2026} />);
+        // Assert on the rendered text content directly so typecheck does not
+        // depend on the jest-dom matcher type augmentation being installed.
+        expect(container.textContent).toContain(String(new Date().getFullYear()));
     });
 });
 
