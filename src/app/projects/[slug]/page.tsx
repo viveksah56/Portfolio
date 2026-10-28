@@ -6,38 +6,37 @@ import Header from '@/components/Header';
 import JsonLd from '@/components/json-ld';
 import { Badge } from '@/components/ui/badge';
 import { siteConfig } from '@/lib/constants';
-import { caseStudies, getCaseStudy } from '@/lib/projects';
+import { caseStudies, getCaseStudy } from '@/lib/case-studies';
 import { seoData } from '@/lib/seo';
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+    params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
-  return getAllProjectSlugs().map((slug) => ({ slug }));
+    return caseStudies.map((study) => ({ slug: study.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const project = getProject(slug);
-  if (!project) return {};
+    const { slug } = await params;
+    const study = getCaseStudy(slug);
+    if (!study) return {};
 
-  const baseUrl = seoData?.siteUrl || "https://www.bibeksah1.com.np";
-  const canonicalUrl = `${baseUrl}/projects/${project.slug}`;
+    const canonicalUrl = `${seoData.siteUrl}/projects/${study.slug}`;
 
-  return {
-    title: `${project.title} — Case Study | Bibek Sah`,
-    description: project.description,
-    openGraph: {
-      title: `${project.title} — Case Study`,
-      description: project.description,
-      type: "article",
-      url: canonicalUrl,
-    },
-    alternates: {
-      canonical: canonicalUrl,
-    },
-  };
+    return {
+        title: `${study.name} — Case Study`,
+        description: study.description,
+        openGraph: {
+            title: `${study.name} — Case Study`,
+            description: study.description,
+            type: 'article',
+            url: canonicalUrl,
+        },
+        alternates: {
+            canonical: canonicalUrl,
+        },
+    };
 }
 
 const labelClass = 'text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground sm:text-xs';
@@ -47,7 +46,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
     const study = getCaseStudy(slug);
     if (!study) notFound();
 
-    const pageUrl = `${siteUrl}/projects/${study.slug}`;
+    const pageUrl = `${seoData.siteUrl}/projects/${study.slug}`;
     const others = caseStudies.filter((item) => item.slug !== study.slug);
 
     const jsonLd = {
@@ -62,261 +61,197 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 sameAs: study.url,
                 genre: study.category,
                 keywords: [...study.scope, ...study.focusAreas].join(', '),
-                creator: { '@id': `${siteUrl}/#person` },
+                creator: { '@id': `${seoData.siteUrl}/#person` },
                 inLanguage: 'en',
-                isPartOf: { '@id': `${siteUrl}/#website` },
+                isPartOf: { '@id': `${seoData.siteUrl}/#website` },
             },
             {
                 '@type': 'BreadcrumbList',
                 itemListElement: [
-                    { '@type': 'ListItem', position: 1, name: siteConfig.name, item: siteUrl },
-                    { '@type': 'ListItem', position: 2, name: 'Projects', item: `${siteUrl}/#work` },
+                    { '@type': 'ListItem', position: 1, name: siteConfig.name, item: seoData.siteUrl },
+                    { '@type': 'ListItem', position: 2, name: 'Projects', item: `${seoData.siteUrl}/#work` },
                     { '@type': 'ListItem', position: 3, name: study.name, item: pageUrl },
                 ],
             },
         ],
     };
 
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <main className="min-h-screen bg-black text-white px-6 md:px-24 py-16 selection:bg-neutral-800 selection:text-white">
-        <div className="max-w-5xl mx-auto">
-          {/* Back Navigation */}
-          <Link
-            className="text-sm text-neutral-400 hover:text-white transition-colors mb-12 inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 rounded-sm"
-            href="/projects"
-          >
-            ← All projects
-          </Link>
-
-          {/* Header Metadata */}
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="text-xs tracking-wider uppercase text-neutral-400 font-mono">
-              {project.category}
-            </span>
-            <span
-              className={`text-xs px-2.5 py-0.5 rounded-full border font-medium ${statusColor}`}
+    return (
+        <>
+            <Header />
+            <main
+                id="main"
+                tabIndex={-1}
+                className="min-h-svh bg-background px-6 text-foreground outline-none selection:bg-brand selection:text-white md:px-24"
             >
-              {project.status}
-            </span>
-          </div>
+                <div className="mx-auto max-w-5xl pt-32 pb-16 sm:pt-40">
+                    <article>
+                        {/* Back navigation */}
+                        <Link
+                            className="mb-12 inline-flex items-center gap-1.5 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                            href="/projects"
+                        >
+                            <ArrowLeft className="size-4" aria-hidden="true" />
+                            All projects
+                        </Link>
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6">
-            {project.title}
-          </h1>
-
-          <p className="text-xl md:text-2xl text-neutral-300 mb-8 font-light leading-snug">
-            {project.subtitle}
-          </p>
-
-          <p className="text-neutral-400 max-w-3xl leading-relaxed mb-16 text-base md:text-lg">
-            {project.description}
-          </p>
-
-          {/* Key Specification Matrix */}
-          <div className="border-t border-neutral-800 divide-y divide-neutral-800 mb-16">
-            <div className="py-6 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-              <span className="text-xs uppercase tracking-wider text-neutral-500 font-medium">
-                My Role
-              </span>
-              <span className="md:col-span-3 text-neutral-200 font-medium">
-                {project.role}
-              </span>
-            </div>
-
-            <div className="py-6 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-              <span className="text-xs uppercase tracking-wider text-neutral-500 font-medium">
-                Team Setup
-              </span>
-              <span className="md:col-span-3 text-neutral-300 text-sm">
-                {project.team}
-              </span>
-            </div>
-
-            <div className="py-6 grid grid-cols-1 md:grid-cols-4 gap-4 items-baseline">
-              <span className="text-xs uppercase tracking-wider text-neutral-500 font-medium">
-                Frontend Stack
-              </span>
-              <span className="md:col-span-3 text-neutral-200 font-mono text-sm">
-                {project.frontendStack.join(" · ")}
-              </span>
-            </div>
-
-            <div className="py-6 grid grid-cols-1 md:grid-cols-4 gap-4 items-baseline">
-              <span className="text-xs uppercase tracking-wider text-neutral-500 font-medium">
-                Backend Stack
-              </span>
-              <span className="md:col-span-3 text-neutral-200 font-mono text-sm">
-                {project.backendStack.join(" · ")}
-              </span>
-            </div>
-
-            <div className="py-6 grid grid-cols-1 md:grid-cols-4 gap-4 items-baseline">
-              <span className="text-xs uppercase tracking-wider text-neutral-500 font-medium">
-                Database
-              </span>
-              <span className="md:col-span-3 text-neutral-200 font-mono text-sm">
-                {project.databaseStack.join(" · ")}
-              </span>
-            </div>
-
-            <div className="py-6 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-              <span className="text-xs uppercase tracking-wider text-neutral-500 font-medium">
-                Focus Areas
-              </span>
-              <div className="md:col-span-3 flex flex-wrap gap-2">
-                {project.focusAreas.map((area, i) => (
-                  <span
-                    key={i}
-                    className="bg-neutral-900 border border-neutral-800 px-3 py-1.5 rounded-full text-xs text-neutral-300"
-                  >
-                    {area}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Architecture Diagram / Summary */}
-          {project.architecture ? (
-            <section aria-labelledby="architecture-heading" className="mb-16">
-              <h2
-                id="architecture-heading"
-                className="text-xs uppercase tracking-wider text-neutral-400 font-mono mb-6"
-              >
-                System Architecture
-              </h2>
-              <div className="bg-neutral-950 border border-neutral-800 rounded-2xl p-6 sm:p-8">
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                  <div className="border-l border-neutral-800 pl-4">
-                    <span className="text-xs text-neutral-500 uppercase tracking-wider font-mono">
-                      Client Tier
-                    </span>
-                    <p className="mt-2 text-sm text-neutral-300 leading-relaxed">
-                      {project.architecture.client}
-                    </p>
-                  </div>
-                  <div className="border-l border-neutral-800 pl-4">
-                    <span className="text-xs text-neutral-500 uppercase tracking-wider font-mono">
-                      Service Layer
-                    </span>
-                    <p className="mt-2 text-sm text-neutral-300 leading-relaxed">
-                      {project.architecture.server}
-                    </p>
-                  </div>
-                  <div className="border-l border-neutral-800 pl-4">
-                    <span className="text-xs text-neutral-500 uppercase tracking-wider font-mono">
-                      Data Layer
-                    </span>
-                    <p className="mt-2 text-sm text-neutral-300 leading-relaxed">
-                      {project.architecture.database}
-                    </p>
-                  </div>
-                  <div className="border-l border-neutral-800 pl-4">
-                    <span className="text-xs text-neutral-500 uppercase tracking-wider font-mono">
-                      Security & Auth
-                    </span>
-                    <p className="mt-2 text-sm text-neutral-300 leading-relaxed">
-                      {project.architecture.auth}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-          ) : null}
-
-          {/* Technical Challenges */}
-          {project.challenges && project.challenges.length > 0 ? (
-            <section aria-labelledby="challenges-heading" className="mb-16">
-              <h2
-                id="challenges-heading"
-                className="text-xs uppercase tracking-wider text-neutral-400 font-mono mb-6"
-              >
-                Key Engineering Challenges & Solutions
-              </h2>
-              <div className="grid gap-6 md:grid-cols-2">
-                {project.challenges.map((ch, idx) => (
-                  <div
-                    key={ch.title}
-                    className="bg-neutral-950 border border-neutral-800 rounded-2xl p-6 flex flex-col justify-between"
-                  >
-                    <div>
-                      <span className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
-                        Challenge 0{idx + 1}
-                      </span>
-                      <h3 className="mt-2 text-lg font-semibold text-white">
-                        {ch.title}
-                      </h3>
-                      <div className="mt-4 space-y-3 text-sm">
-                        <div>
-                          <span className="text-xs font-semibold text-amber-400/90 uppercase tracking-wide">
-                            The Problem:
-                          </span>
-                          <p className="mt-1 text-neutral-400 leading-relaxed">
-                            {ch.problem}
-                          </p>
+                        {/* Header metadata */}
+                        <div className="mb-4 flex flex-wrap items-center gap-3">
+                            <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                                {study.category}
+                            </span>
+                            <Badge variant="outline" className="rounded-full">
+                                Case study
+                            </Badge>
                         </div>
-                        <div>
-                          <span className="text-xs font-semibold text-emerald-400/90 uppercase tracking-wide">
-                            The Solution:
-                          </span>
-                          <p className="mt-1 text-neutral-300 leading-relaxed">
-                            {ch.solution}
-                          </p>
-                        </div>
-                        <div className="grid gap-1 py-4 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-6 sm:py-5">
-                            <dt className={labelClass}>Focus areas</dt>
-                            <dd>
-                                <ul className="flex flex-wrap gap-2">
+
+                        <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-7xl">
+                            {study.name}
+                        </h1>
+
+                        <p className="mb-8 text-xl font-light leading-snug text-muted-foreground md:text-2xl">
+                            {study.tagline}
+                        </p>
+
+                        <p className="mb-16 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                            {study.description}
+                        </p>
+
+                        {/* Key specification matrix */}
+                        <div className="mb-16 divide-y divide-border border-t border-border">
+                            <div className="grid grid-cols-1 items-center gap-4 py-6 md:grid-cols-4">
+                                <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                                    My Role
+                                </span>
+                                <span className="font-medium md:col-span-3">{study.role}</span>
+                            </div>
+
+                            <div className="grid grid-cols-1 items-baseline gap-4 py-6 md:grid-cols-4">
+                                <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                                    Stack
+                                </span>
+                                <span className="font-mono text-sm md:col-span-3">
+                                    {study.scope.join(' · ')}
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-1 items-baseline gap-4 py-6 md:grid-cols-4">
+                                <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                                    Focus Areas
+                                </span>
+                                <div className="flex flex-wrap gap-2 md:col-span-3">
                                     {study.focusAreas.map((area) => (
-                                        <li key={area}>
-                                            <Badge variant="secondary" className="h-auto rounded-full px-3.5 py-1.5 text-[13px] font-semibold sm:text-sm">
-                                                {area}
-                                            </Badge>
-                                        </li>
+                                        <span
+                                            key={area}
+                                            className="rounded-full border border-border bg-background px-3 py-1.5 text-xs text-muted-foreground"
+                                        >
+                                            {area}
+                                        </span>
                                     ))}
-                                </ul>
-                            </dd>
+                                </div>
+                            </div>
                         </div>
-                    </dl>
 
-                    <a
-                        href={study.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Visit ${study.name} at ${study.urlLabel} (opens in a new tab)`}
-                        className="group mt-10 inline-flex w-fit items-center gap-3 border-b-2 border-foreground/80 pb-2.5 text-[17px] font-semibold tracking-[-0.022em] text-foreground transition-colors hover:border-brand hover:text-brand focus-visible:border-brand focus-visible:text-brand"
-                    >
-                        Visit project
-                        <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-                        <span className="text-[15px] font-medium text-muted-foreground group-hover:text-brand">
-                            {study.urlLabel}
-                        </span>
-                    </a>
+                        {/* Narrative sections */}
+                        <section aria-labelledby="challenge-heading" className="mb-16">
+                            <h2 id="challenge-heading" className="mb-6 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                                The Challenge
+                            </h2>
+                            <p className="max-w-3xl leading-relaxed text-muted-foreground">
+                                {study.challenge}
+                            </p>
+                        </section>
 
-                    <section aria-labelledby="more-projects" className="mt-20 border-t border-border pt-10 sm:mt-28">
-                        <h2 id="more-projects" className={labelClass}>
-                            More projects
-                        </h2>
-                        <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
-                            {others.map((item) => (
-                                <li key={item.slug}>
-                                    <Link
-                                        href={`/projects/${item.slug}`}
-                                        className="text-[17px] font-semibold tracking-[-0.022em] text-foreground transition-colors hover:text-brand focus-visible:text-brand"
-                                    >
-                                        {item.name}
-                                    </Link>
-                                    <span className="block text-sm text-muted-foreground">{item.category}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </section>
-                </article>
+                        <section aria-labelledby="process-heading" className="mb-16">
+                            <h2 id="process-heading" className="mb-6 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                                The Process
+                            </h2>
+                            <ol className="space-y-8">
+                                {study.process.map((step, idx) => (
+                                    <li key={step.title} className="border-l-2 border-border pl-6">
+                                        <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                                            Step 0{idx + 1}
+                                        </span>
+                                        <h3 className="mt-2 text-lg font-semibold text-foreground">
+                                            {step.title}
+                                        </h3>
+                                        <p className="mt-2 leading-relaxed text-muted-foreground">
+                                            {step.detail}
+                                        </p>
+                                    </li>
+                                ))}
+                            </ol>
+                        </section>
+
+                        <section aria-labelledby="outcome-heading" className="mb-16">
+                            <h2 id="outcome-heading" className="mb-6 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                                The Outcome
+                            </h2>
+                            <p className="max-w-3xl leading-relaxed text-muted-foreground">
+                                {study.outcome}
+                            </p>
+                        </section>
+
+                        <section aria-labelledby="highlights-heading" className="mb-16">
+                            <h2 id="highlights-heading" className="mb-6 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                                Highlights
+                            </h2>
+                            <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-3">
+                                {study.highlights.map((highlight) => (
+                                    <div key={highlight.label}>
+                                        <dt className={labelClass}>{highlight.label}</dt>
+                                        <dd className="mt-1 text-sm text-foreground">{highlight.value}</dd>
+                                    </div>
+                                ))}
+                            </dl>
+                        </section>
+
+                        <section aria-labelledby="reflection-heading" className="mb-16">
+                            <h2 id="reflection-heading" className="mb-6 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                                Reflection
+                            </h2>
+                            <p className="max-w-3xl leading-relaxed text-muted-foreground">
+                                {study.reflection}
+                            </p>
+                        </section>
+
+                        <a
+                            href={study.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Visit ${study.name} at ${study.urlLabel} (opens in a new tab)`}
+                            className="group mt-10 inline-flex w-fit items-center gap-3 border-b-2 border-foreground/80 pb-2.5 text-[17px] font-semibold tracking-[-0.022em] text-foreground transition-colors hover:border-brand hover:text-brand focus-visible:border-brand focus-visible:text-brand"
+                        >
+                            Visit project
+                            <ArrowUpRight
+                                className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                                aria-hidden="true"
+                            />
+                            <span className="text-[15px] font-medium text-muted-foreground group-hover:text-brand">
+                                {study.urlLabel}
+                            </span>
+                        </a>
+
+                        <section aria-labelledby="more-projects" className="mt-20 border-t border-border pt-10 sm:mt-28">
+                            <h2 id="more-projects" className={labelClass}>
+                                More projects
+                            </h2>
+                            <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
+                                {others.map((item) => (
+                                    <li key={item.slug}>
+                                        <Link
+                                            href={`/projects/${item.slug}`}
+                                            className="text-[17px] font-semibold tracking-[-0.022em] text-foreground transition-colors hover:text-brand focus-visible:text-brand"
+                                        >
+                                            {item.name}
+                                        </Link>
+                                        <span className="block text-sm text-muted-foreground">{item.category}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
+                    </article>
+                </div>
             </main>
             <JsonLd data={jsonLd} />
         </>
