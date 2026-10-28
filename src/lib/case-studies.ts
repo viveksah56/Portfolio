@@ -10,9 +10,7 @@ export type CaseStudyHighlight = {
     value: string;
 };
 
-type SelectedProject = (typeof selectedProjectsData.projects)[number];
-
-export type CaseStudy = {
+type CaseStudyProjectFields = {
     index: string;
     category: string;
     name: string;
@@ -25,6 +23,9 @@ export type CaseStudy = {
     url: string;
     urlLabel: string;
     visualPosition: 'left' | 'right';
+};
+
+export type CaseStudy = CaseStudyProjectFields & {
     slug: string;
     challenge: string;
     process: readonly CaseStudyProcessStep[];
@@ -42,7 +43,7 @@ export function slugify(name: string): string {
 
 type CaseStudyBody = Pick<CaseStudy, 'challenge' | 'process' | 'outcome' | 'reflection' | 'highlights'>;
 
-const applyMyFileProject = {
+const applyMyFileProject: CaseStudyProjectFields = {
     index: '06',
     category: 'Consultancy platform',
     name: 'ApplyMyFile',
@@ -56,7 +57,7 @@ const applyMyFileProject = {
     url: 'https://www.applymyfile.com',
     urlLabel: 'applymyfile.com',
     visualPosition: 'right',
-} as const satisfies Omit<SelectedProject, 'index'>;
+};
 
 const caseStudyContent: Record<string, CaseStudyBody> = {
     examnepal: {
@@ -251,21 +252,19 @@ const caseStudyContent: Record<string, CaseStudyBody> = {
     },
 };
 
-function toCaseStudy(
-    project:
-        | (SelectedProject & Record<string, unknown>)
-        | (typeof applyMyFileProject & Record<string, unknown>),
-): CaseStudy {
+const projectFields: readonly CaseStudyProjectFields[] = [
+    ...selectedProjectsData.projects,
+    applyMyFileProject,
+];
+
+function buildCaseStudy(project: CaseStudyProjectFields): CaseStudy {
     const slug = slugify(project.name);
     const body = caseStudyContent[slug];
     if (!body) throw new Error(`Missing case study content for slug: ${slug}`);
     return { ...project, slug, ...body };
 }
 
-export const caseStudies: readonly CaseStudy[] = [
-    ...selectedProjectsData.projects.map((project) => toCaseStudy(project as never)),
-    toCaseStudy(applyMyFileProject),
-];
+export const caseStudies: readonly CaseStudy[] = projectFields.map(buildCaseStudy);
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
     return caseStudies.find((study) => study.slug === slug);
