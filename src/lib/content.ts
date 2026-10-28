@@ -1,8 +1,7 @@
-export const EMAIL = 'sahbibek55@gmail.com';
-export const GITHUB = 'https://github.com/viveksah56';
-export const LINKEDIN = 'https://www.linkedin.com/in/bibek-s-1067aa1a4/';
-export const CV_REQUEST = `mailto:${EMAIL}?subject=Request%20for%20your%20CV`;
+// Superseded by src/lib/constants.ts and src/lib/case-studies.ts.
+// Safe to delete this file in a follow-up commit.
 
+<<<<<<< HEAD
 export type Project = {
     slug: string;
     number: string;
@@ -157,3 +156,6 @@ export const experience = [
         tags: ['React.js', 'Next.js', 'TypeScript', 'Java', 'Spring Boot', 'Node.js', 'MongoDB'],
     },
 ];
+=======
+export {};
+>>>>>>> origin/fix/bugs-seo-case-studies-ci
