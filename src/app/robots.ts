@@ -3,7 +3,13 @@ import { seoData } from '@/lib/seo';
 
 export default function robots(): MetadataRoute.Robots {
     return {
-        rules: { userAgent: '*', allow: '/' },
+        rules: [
+            {
+                userAgent: '*',
+                allow: '/',
+            },
+        ],
         sitemap: `${seoData.siteUrl}/sitemap.xml`,
+        host: seoData.siteUrl,
     };
 }
