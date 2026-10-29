@@ -21,26 +21,46 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const study = getCaseStudy(slug);
-  if (!study) return {};
+  if (!study) {
+    return {
+      title: 'Project Not Found',
+      robots: { index: false, follow: false },
+    };
+  }
 
   const canonicalUrl = `${seoData.siteUrl}/projects/${study.slug}`;
+  const socialImageUrl = `${seoData.siteUrl}${seoData.socialCard.url}`;
+  const pageTitle = `${study.name} — Case Study`;
 
   return {
-    title: `${study.name} — Case Study`,
+    title: pageTitle,
     description: study.description,
     openGraph: {
-      title: `${study.name} — Case Study`,
+      title: pageTitle,
       description: study.description,
       type: 'article',
       url: canonicalUrl,
+      images: [
+        {
+          url: socialImageUrl,
+          width: seoData.socialCard.width,
+          height: seoData.socialCard.height,
+          alt: `${study.name} — Case Study by ${siteConfig.name}`,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${study.name} — Case Study`,
+      title: pageTitle,
       description: study.description,
+      images: [{ url: socialImageUrl, alt: `${study.name} — Case Study by ${siteConfig.name}` }],
     },
     alternates: {
       canonical: canonicalUrl,
+      languages: {
+        'en-US': canonicalUrl,
+        'x-default': canonicalUrl,
+      },
     },
   };
 }
@@ -81,7 +101,7 @@ function CaseStudyContent({ slug }: { slug: string }) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: siteConfig.name, item: seoData.siteUrl },
-          { '@type': 'ListItem', position: 2, name: 'Projects', item: `${seoData.siteUrl}/#work` },
+          { '@type': 'ListItem', position: 2, name: 'Projects', item: `${seoData.siteUrl}/projects` },
           { '@type': 'ListItem', position: 3, name: study.name, item: pageUrl },
         ],
       },
@@ -99,7 +119,7 @@ function CaseStudyContent({ slug }: { slug: string }) {
           {/* Back navigation */}
           <Link
             className="mb-12 inline-flex items-center gap-1.5 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            href="/projects"
+            href="/#work"
           >
             <ArrowLeft className="size-4" aria-hidden="true" />
             All projects

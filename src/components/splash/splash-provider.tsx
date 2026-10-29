@@ -19,12 +19,17 @@ type Mode = 'auto' | 'replay' | 'done';
 
 const SplashContext = createContext<SplashContextValue | null>(null);
 
-function subscribe() {
-    return () => {};
+function subscribe(callback: () => void) {
+    if (typeof window === 'undefined') return () => {};
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    media.addEventListener('change', callback);
+    return () => media.removeEventListener('change', callback);
 }
 
 function getSkipSnapshot() {
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return typeof window !== 'undefined'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
 }
 
 function getServerSkip() {

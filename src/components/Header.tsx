@@ -13,12 +13,13 @@ const SCROLL_THRESHOLD = 24;
 const MOBILE_MENU_ID = 'mobile-navigation';
 
 function subscribe(callback: () => void) {
+    if (typeof window === 'undefined') return () => {};
     window.addEventListener('scroll', callback, { passive: true });
     return () => window.removeEventListener('scroll', callback);
 }
 
 function getSnapshot() {
-    return window.scrollY > SCROLL_THRESHOLD;
+    return typeof window !== 'undefined' ? window.scrollY > SCROLL_THRESHOLD : false;
 }
 
 function getServerSnapshot() {

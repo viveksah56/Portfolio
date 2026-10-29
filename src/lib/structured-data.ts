@@ -6,30 +6,26 @@ const { siteUrl, title, description, socialCard, knowsAbout } = seoData;
 const sameAs = contactData.socials.map((social) => social.href);
 
 const alumniOf = educationData
-    .filter((item) => item.institution === 'Pokhara University' || item.institution.startsWith('ISMT'))
+    .filter((item) => item.institution === 'Pokhara University' || item.institution.includes('ISMT') || item.institution.includes('Sunderland'))
     .map((item) => ({
         '@type': 'EducationalOrganization',
         name: item.institution,
     }));
 
-const projectItems = projectsData.flatMap((project, index) =>
-    'url' in project
-        ? [
-            {
-                '@type': 'ListItem',
-                position: index + 1,
-                item: {
-                    '@type': 'CreativeWork',
-                    name: project.name,
-                    description: project.description,
-                    url: project.url,
-                    creator: { '@id': `${siteUrl}/#person` },
-                    keywords: project.technologies.join(', '),
-                },
-            },
-        ]
-        : [],
-);
+const projectItems = projectsData
+    .filter((project): project is typeof project & { url: string } => 'url' in project && Boolean(project.url))
+    .map((project, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+            '@type': 'CreativeWork',
+            name: project.name,
+            description: project.description,
+            url: project.url,
+            creator: { '@id': `${siteUrl}/#person` },
+            keywords: project.technologies.join(', '),
+        },
+    }));
 
 export const structuredData = {
     '@context': 'https://schema.org',

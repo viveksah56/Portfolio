@@ -70,11 +70,10 @@ function ProjectVisual({ project }: { project: SelectedProject }) {
 function ProjectDetails({ project }: { project: SelectedProject }) {
     return (
         <div className="flex flex-col justify-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground sm:text-[13px]">
-                {project.name}
-            </p>
-
-            <h3 className="mt-5 text-balance text-[clamp(2rem,4.2vw,3.75rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-foreground sm:mt-6">
+            <h3 className="text-balance text-[clamp(2rem,4.2vw,3.75rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-foreground">
+                <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-brand sm:text-[13px]">
+                    {project.name}
+                </span>
                 {project.tagline}
             </h3>
 

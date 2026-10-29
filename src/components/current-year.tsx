@@ -12,11 +12,7 @@ function subscribe(callback: () => void) {
 }
 
 function getSnapshot() {
-    return new Date().getFullYear();
-}
-
-function getServerSnapshot() {
-    return 0;
+    return typeof window !== 'undefined' ? new Date().getFullYear() : 2026;
 }
 
 type CurrentYearProps = {
@@ -24,6 +20,6 @@ type CurrentYearProps = {
 };
 
 export default function CurrentYear({ fallback }: CurrentYearProps) {
-    const year = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-    return <>{year || fallback}</>;
+    const year = useSyncExternalStore(subscribe, getSnapshot, () => fallback);
+    return <>{year}</>;
 }

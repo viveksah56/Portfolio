@@ -8,8 +8,8 @@ const itemClass =
 export default function WorkSection() {
     return (
         <section
-            id="work"
-            aria-labelledby="work-heading"
+            id="stats"
+            aria-labelledby="stats-heading"
             className="relative isolate overflow-hidden bg-foreground py-14 text-background sm:py-20 lg:py-24"
         >
             <div
@@ -24,7 +24,7 @@ export default function WorkSection() {
             <div className="mx-auto w-full px-5 sm:px-8 lg:px-[6%]">
                 <ScrollReveal y={16} duration={0.7}>
                     <h2
-                        id="work-heading"
+                        id="stats-heading"
                         className="type-caption flex items-center gap-4 font-semibold uppercase tracking-[0.2em] text-background/60 sm:text-sm"
                     >
                         <span className="rounded-full bg-background/20 px-2.5 py-0.5 text-xs font-bold text-background ring-1 ring-background/30">

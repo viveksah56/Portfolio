@@ -61,10 +61,15 @@ export const metadata: Metadata = {
         },
     },
     verification: {
-        google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
+        google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || undefined,
         other: process.env.NEXT_PUBLIC_BING_VERIFICATION
             ? { 'msvalidate.01': process.env.NEXT_PUBLIC_BING_VERIFICATION }
             : undefined,
+    },
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: 'default',
+        title: siteConfig.name,
     },
     formatDetection: { email: false, address: false, telephone: false },
 };

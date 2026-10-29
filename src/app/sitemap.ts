@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: seoData.lastUpdated,
             changeFrequency: 'monthly' as const,
             priority: 0.7,
+            images: [`${seoData.siteUrl}${seoData.socialCard.url}`],
         })),
     ];
 }

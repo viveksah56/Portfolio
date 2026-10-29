@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
     compress: true,
     images: {
         formats: ['image/avif', 'image/webp'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+            },
+        ],
     },
     async redirects() {
         const canonicalOrigin = 'https://www.bibeksah1.com.np';
